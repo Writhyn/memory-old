@@ -9,15 +9,19 @@ function submitText() {
 let level = 0;
 
 function levelUp() {
-    if (level < 5) {
+    if (level < 6) {
         level++;
         document.querySelector('#level').innerHTML = 'Level ' + level;
+        document.querySelector('h2').style.animationName = 'blink' + level;
     }
 }
 
 function levelDown() {
-    level--;
-    document.querySelector('#level').innerHTML = 'Level ' + level;
+    if (level > 1) {
+        level--;
+        document.querySelector('#level').innerHTML = 'Level ' + level;
+        document.querySelector('h2').style.animationName = 'blink' + level;
+    }
 }
 
 function blink1() {

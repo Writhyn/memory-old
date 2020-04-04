@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <div id="startDiv">
+        <input type="text" id="inputText" placeholder=" paste text here">
+        <button onclick="submitText()">Start</button>
+    </div>
+    <div id="practice">
+        <h2 id="practiceText">Paste text into field above and click 'Start'</h2>
+        
+    </div>
+
+    <div id='advance'>
+        <button onclick="levelDown()"><</button>
+        <h3 id="level">Read</h3>
+        <button onclick='levelUp()'>></button>
+    </div>
+
+    <div id="buttons">
+        <button onclick="blink1()">Level One</button>
+        <button onclick="blink2()">Level Two</button>
+        <button onclick="blink3()">Level Three</button>
+        <button onclick="blink4()">Level Four</button>
+        <button onclick="blink5()">Level Five</button>
+        <button onclick="boss()">Boss</button>
+        <button onclick="blinkStop()" style='background-color: #556F94; color: white;' >Stop</button>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>

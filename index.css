@@ -1,0 +1,93 @@
+html, body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
+    height: 100%;
+    font-family: 'Oxygen', sans-serif;
+    background-color: #2C4871;
+}
+
+#practice {
+    width: 80vw;
+    margin: 30px;
+    background-color: #556F94;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
+    border-radius: 25px;
+}
+
+#inputText {
+    background-color: #102A50;
+    border: 2px solid #556F94;
+    line-height: 37px;
+    border-radius: 10px;
+    color: #93A5BF;
+}
+
+h2 {
+    color: white;
+    text-align: center;
+    width: 90%;
+    line-height: 50px;
+    display: block;
+    animation-duration: 4s;
+    animation-timing-function: step-start;
+    animation-iteration-count: infinite;
+    animation-direction: reverse;
+}
+
+@keyframes blink1 {
+    30% {opacity: 0%;}
+}
+
+@keyframes blink2 {
+    45% {opacity: 0%;}
+}
+
+@keyframes blink3 {
+    60% {opacity: 0%;}
+}
+
+@keyframes blink4 {
+    75% {opacity: 0%;}
+}
+
+@keyframes blink5 {
+    90% {opacity: 0%;}
+}
+
+#advance {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #93A5BF;
+}
+
+#buttons {
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+}
+
+button {
+    background-color: #93A5BF;
+    color: #102A50;
+    font-size: large;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+    box-shadow: -2px 2px 7px 0px rgba(0,0,0,0.42);
+}
+
+button:focus {
+    outline: none;
+}
+
+button:active {
+    box-shadow: none;
+}

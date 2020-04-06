@@ -2,6 +2,7 @@ const submitText = () => {
     const text = document.querySelector('#inputText').value;
     if (text.length > 0) {
         document.querySelector('#practiceText').innerHTML = text;
+        document.querySelector('#practiceText').style.textAlign = 'justify';
         document.querySelector("#startDiv").style.display = 'none';
     }
 }

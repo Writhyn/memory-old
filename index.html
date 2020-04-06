@@ -10,20 +10,22 @@
 </head>
 <body>
 
-    <div id="startDiv">
-        <input type="text" id="inputText" placeholder=" paste text here">
-        <button id="startButton">Start</button>
-    </div>
     <div id="practice">
-        <h2 id="practiceText">Paste text into field above and click 'Start'</h2>
-        
+        <h2 id="practiceText" contenteditable="true">Paste text here, change difficulty level below</h2>
     </div>
 
     <div id='advance'>
-        <button id="levelDown"><</button>
+        <div id="levelDown" class="arrows"></div>
         <h3 id="level">Level 0</h3>
-        <button id='levelUp'>></button>
+        <div id='levelUp' class="arrows"></div>
+       
     </div>
+
+    <p id="instructLink"><u>Instructions</u></p>
+    <p id='instructions' class="hidden">
+        lorem ipsum 
+    </p>
+
     <script src="index.js"></script>
 </body>
 </html>

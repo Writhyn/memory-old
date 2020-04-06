@@ -1,11 +1,28 @@
+let textArray = [];
+
 const submitText = () => {
-    const text = document.querySelector('#inputText').value;
-    if (text.length > 0) {
-        document.querySelector('#practiceText').innerHTML = text;
-        document.querySelector('#practiceText').style.textAlign = 'justify';
-        document.querySelector("#startDiv").style.display = 'none';
-    }
+    const text = document.querySelector('#practiceText');
+    text.style.textAlign = 'justify';
+    textArray = text.split(' ');
+    
 }
+
+const showInstructions = () => {
+    document.querySelector('#instructions').classList.toggle('hidden');
+}
+
+document.querySelector('#practiceText').addEventListener("paste", function(e) {
+    // cancel paste
+    e.preventDefault();
+
+    // get text representation of clipboard
+    var text = (e.originalEvent || e).clipboardData.getData('text/plain');
+
+    // insert text manually
+    document.execCommand("insertHTML", false, text);
+
+    submitText();
+});
 
 let levelObj = {
     level: 0
@@ -30,7 +47,8 @@ const levelDown = () => {
     }
 }
 
-document.querySelector('#startButton').addEventListener('click', submitText);
+
+document.querySelector('#instructLink').addEventListener('click', showInstructions);
 
 document.querySelector('#levelUp').addEventListener('click', levelUp);
 

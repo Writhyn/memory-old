@@ -1,4 +1,4 @@
-function submitText() {
+const submitText = () => {
     const text = document.querySelector('#inputText').value;
     if (text.length > 0) {
         document.querySelector('#practiceText').innerHTML = text;
@@ -6,50 +6,31 @@ function submitText() {
     }
 }
 
-let level = 0;
+let levelObj = {
+    level: 0
+}
 
-function levelUp() {
-    if (level < 6) {
-        level++;
-        document.querySelector('#level').innerHTML = 'Level ' + level;
-        document.querySelector('h2').style.animationName = 'blink' + level;
+const levelChange = () => {
+    document.querySelector('#level').innerHTML = 'Level ' + levelObj.level;
+    document.querySelector('h2').style.animationName = 'blink' + levelObj.level;
+}
+
+const levelUp = () => {
+    if (levelObj.level < 6) {
+        levelObj.level++;
+        levelChange();
     }
 }
 
-function levelDown() {
-    if (level > 1) {
-        level--;
-        document.querySelector('#level').innerHTML = 'Level ' + level;
-        document.querySelector('h2').style.animationName = 'blink' + level;
+const levelDown = () => {
+    if (levelObj.level > 0) {
+        levelObj.level--;
+        levelChange();
     }
 }
 
-function blink1() {
-    document.querySelector('h2').style.animationName = 'blink1';
-}
+document.querySelector('#startButton').addEventListener('click', submitText);
 
-function blink2() {
-    document.querySelector('h2').style.animationName = 'blink2';
-}
+document.querySelector('#levelUp').addEventListener('click', levelUp);
 
-function blink3() {
-    document.querySelector('h2').style.animationName = 'blink3';
-}
-
-function blink4() {
-    document.querySelector('h2').style.animationName = 'blink4';
-}
-
-function blink5() {
-    document.querySelector('h2').style.animationName = 'blink5';
-}
-
-function blinkStop() {
-    document.querySelector('h2').style.animationName = null;
-    document.querySelector('h2').style.opacity = ('100');
-}
-
-function boss() {
-    document.querySelector('h2').style.animationName = null;
-    document.querySelector('h2').style.opacity = ('0');
-}
+document.querySelector('#levelDown').addEventListener('click', levelDown);

@@ -30,32 +30,23 @@ document.querySelector('#practiceText').addEventListener("paste", function(e) {
     submitText();
 });
 
-let levelObj = {
+const levelObj = {
     level: 0,
-    levelUp: function() {
-        this.level++;
+    lvlUp: function() {
+        if (this.level < 6) {
+            this.level++;
+            this.lvlChange();
+        }
     },
-    levelDown: function() {
-        this.level--;
-    }
-}
-
-const levelChange = () => {
-    document.querySelector('#level').innerHTML = 'Level ' + levelObj.level;
-    document.querySelector('h2').style.animationName = 'blink' + levelObj.level;
-}
-
-const levelUp = () => {
-    if (levelObj.level < 6) {
-        levelObj.levelUp();
-        levelChange();
-    }
-}
-
-const levelDown = () => {
-    if (levelObj.level > 0) {
-        levelObj.levelDown();
-        levelChange();
+    lvlDown: function() {
+        if (this.level > 0) {
+            this.level--;
+            this.lvlChange();
+        }
+    },
+    lvlChange: function() {
+        document.querySelector('#level').innerHTML = 'Level ' + this.level;
+        document.querySelector('h2').style.animationName = 'blink' + this.level;
     }
 }
 
@@ -63,6 +54,6 @@ document.querySelector('#practiceText').addEventListener('click', removeText);
 
 document.querySelector('#instructLink').addEventListener('click', showInstructions);
 
-document.querySelector('#levelUp').addEventListener('click', levelUp);
+document.querySelector('#levelUp').addEventListener('click', () => levelObj.lvlUp());
 
-document.querySelector('#levelDown').addEventListener('click', levelDown);
+document.querySelector('#levelDown').addEventListener('click', () => levelObj.lvlDown());

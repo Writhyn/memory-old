@@ -47,14 +47,12 @@ h1 {
     animation-duration: 2s;
 }
 
-h2 {
+#practiceText {
     color: white;
     font-family: 'Oxygen Mono', monospace;
     font-size: 2.5vh;
     font-weight: lighter;
     width: 90%;
-    line-height: 35px;
-    display: block;
     animation-duration: 4s;
     animation-timing-function: step-start;
     animation-iteration-count: infinite;
@@ -95,27 +93,6 @@ h2 {
     animation-duration: 1.6s;
 }
 
-#buttons {
-    display: flex;
-    justify-content: center;
-    flex-flow: row wrap;
-}
-
-button {
-    background-color: var(--lightest);
-    color: var(--darkest);
-    font-size: large;
-    border: none;
-    padding: 10px;
-    margin: 10px;
-    cursor: pointer;
-    border-radius: 10px;
-}
-
-button:focus {
-    outline: none;
-}
-
 .arrows {
     border-top: 20px solid transparent;
     border-bottom: 20px solid transparent;
@@ -133,7 +110,6 @@ button:focus {
 
 #instructLink {
     color: var(--lightest);
-    display: inline;
     cursor: pointer;
     animation-duration: 1s;
     animation-delay: 3s;

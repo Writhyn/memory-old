@@ -5,26 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen+Mono&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
-    <div id="practice">
-        <h2 id="practiceText" contenteditable="true">Paste text here, change difficulty level below</h2>
+    <div id="machine">
+        <h1 class="shadow-entrance">Memory Machine</h1>
+
+        <div id="practice" class="flicker-in-1">
+            <h2 id="practiceText" contenteditable="true">Paste text here, change difficulty level below</h2>
+        </div>
+
+        <div id='advance' class="flicker-in-1">
+            <div id="levelDown" class="arrows"></div>
+            <h3 id="level">Level 0</h3>
+            <div id='levelUp' class="arrows"></div>
+        
+        </div>
+
     </div>
 
-    <div id='advance'>
-        <div id="levelDown" class="arrows"></div>
-        <h3 id="level">Level 0</h3>
-        <div id='levelUp' class="arrows"></div>
-       
-    </div>
+    
 
-    <p id="instructLink"><u>Instructions</u></p>
-    <p id='instructions' class="hidden">
-        lorem ipsum 
+    <p id="instructLink" class="flicker-in-1"><u>Instructions</u></p>
+    <div id='instructions' class="hidden">
+        <p>
+        Welcome! This little machine is designed to facilitate a non-linear memorization technique I've found incredibly useful. The original method calls for writing or printing text on a card and carrying it around like some sort of savage. So, this being the 21st century, I made this little simulation.<br><br>
+        The steps for its use are thus:
+        <ol>
+            <li>Paste the passage you wish to memorize into the block above. I recommend a short paragraph at a time</li>
+            <li>Read the text <em>out loud</em> a few times until you are comfortable with it, then advance to level 1</li>
+            <li>Continue to read the text out loud naturally. Once you can do so smoothly - even while the text is gone - move to the next level</li>
+            <li>Do the same for each level, only advance when you are able read naturally, as if the text is always there</li>
+            <li>Level 6 is the hardest level, in which the text simply disappears. You could just as easily look away from the screen to achieve this effect, but again, this is the epoch of modernity and screens aren't going to watch themselves</li>
+        </ol>
+        Make sure you stay on a level until you can read naturally. That is, if you're rushing when the text is visible and silent while it's invisible, this is not natural unless you have a very odd way of reading.<br><br>
+        Remember the 'non-linear' part I mentioned? This means your brain will pick up key words and phrases and fill in the between words afterwards. So don't worry about memorizing the words in order: when you mess up, don't start over! Just correct yourself on the spot and <em>keep reading</em>. It's better to follow a passage to its conclusion than to force a cutoff and restart. That's how neanderthals memorize things.
+
     </p>
+    </div>
+    
 
     <script src="index.js"></script>
 </body>

@@ -2,9 +2,15 @@ let textArray = [];
 
 const submitText = () => {
     const text = document.querySelector('#practiceText');
-    text.style.textAlign = 'justify';
     textArray = text.split(' ');
     
+}
+
+const removeText = () => {
+    const text = document.querySelector('#practiceText');
+    if (text.innerHTML === 'Paste text here, change difficulty level below') {
+        text.innerHTML = '';
+    }
 }
 
 const showInstructions = () => {
@@ -25,7 +31,13 @@ document.querySelector('#practiceText').addEventListener("paste", function(e) {
 });
 
 let levelObj = {
-    level: 0
+    level: 0,
+    levelUp: function() {
+        this.level++;
+    },
+    levelDown: function() {
+        this.level--;
+    }
 }
 
 const levelChange = () => {
@@ -35,18 +47,19 @@ const levelChange = () => {
 
 const levelUp = () => {
     if (levelObj.level < 6) {
-        levelObj.level++;
+        levelObj.levelUp();
         levelChange();
     }
 }
 
 const levelDown = () => {
     if (levelObj.level > 0) {
-        levelObj.level--;
+        levelObj.levelDown();
         levelChange();
     }
 }
 
+document.querySelector('#practiceText').addEventListener('click', removeText);
 
 document.querySelector('#instructLink').addEventListener('click', showInstructions);
 

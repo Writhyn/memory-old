@@ -24,15 +24,15 @@ h1 {
     font-weight: bold;
 }
 
-.shadow-entrance {
-    text-shadow: 0px 0px 0px rgba(0,0,0,0);
-    animation: shadow 1.5s ease 0.75s forwards;
-}
+    .shadow-entrance {
+        text-shadow: 0px 0px 0px rgba(0,0,0,0);
+        animation: shadow 1.5s ease 0.75s forwards;
+    }
 
-@keyframes shadow {
-    10% {text-shadow: 1px 1px 0px rgba(0,0,0,0.75);}
-    100% {text-shadow: 4px 4px 4px rgba(0,0,0,0.75);}
-}
+    @keyframes shadow {
+        10% {text-shadow: 1px 1px 0px rgba(0,0,0,0.75);}
+        100% {text-shadow: 4px 4px 4px rgba(0,0,0,0.75);}
+    }
 
 #practice {
     width: 80vw;
@@ -44,42 +44,32 @@ h1 {
     animation-duration: 2s;
 }
 
-#practiceText {
-    color: white;
-    font-family: 'Oxygen Mono', monospace;
-    font-size: 2.5vh;
-    line-height: 30px;
-    font-weight: lighter;
-    animation-duration: 4s;
-    animation-timing-function: step-start;
-    animation-iteration-count: infinite;
-    animation-direction: reverse;
-}
+    #practiceText {
+        color: white;
+        font-family: 'Oxygen Mono', monospace;
+        font-size: 2.5vh;
+        line-height: 30px;
+        font-weight: lighter;
+        animation-duration: 4s;
+        animation-timing-function: step-start;
+        animation-iteration-count: infinite;
+        animation-direction: reverse;
+    }
 
-@keyframes blink1 {
-    30% {opacity: 0%;}
-}
+        @keyframes blink1 {30% {opacity: 0%;}}
 
-@keyframes blink2 {
-    45% {opacity: 0%;}
-}
+        @keyframes blink2 {45% {opacity: 0%;}}
 
-@keyframes blink3 {
-    60% {opacity: 0%;}
-}
+        @keyframes blink3 {60% {opacity: 0%;}}
 
-@keyframes blink4 {
-    75% {opacity: 0%;}
-}
+        @keyframes blink4 {75% {opacity: 0%;}}
 
-@keyframes blink5 {
-    90% {opacity: 0%;}
-}
+        @keyframes blink5 {90% {opacity: 0%;}}
 
-@keyframes blink6 {
-    1% {opacity: 0;}
-    100% {opacity: 0;}
-}
+        @keyframes blink6 {
+            1% {opacity: 0;}
+            100% {opacity: 0;}
+        }
 
 #advance {
     display: flex;
@@ -90,20 +80,20 @@ h1 {
     animation-duration: 1.6s;
 }
 
-.arrows {
-    border-top: 20px solid transparent;
-    border-bottom: 20px solid transparent;
-    margin: 10px;
-    border-radius: 20px;
-}
+    .arrows {
+        border-top: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+        margin: 10px;
+        border-radius: 20px;
+    }
 
-#levelUp {
-    border-left: 20px solid var(--light);
-}
+        #levelUp {
+            border-left: 20px solid var(--light);
+        }
 
-#levelDown {
-    border-right: 20px solid var(--light);
-}
+        #levelDown {
+            border-right: 20px solid var(--light);
+        }
 
 #instructLink {
     color: var(--lightest);
@@ -112,15 +102,15 @@ h1 {
     animation-delay: 3s;
 }
 
-#instructions {
-    color: var(--lightest);
-    text-align: justify;
-    width: 80%;
-}
+    #instructions {
+        color: var(--lightest);
+        text-align: justify;
+        width: 80%;
+    }
 
-.hidden {
-    display: none;
-}
+        .hidden {
+            display: none;
+        }
 
 
 /* ************** */

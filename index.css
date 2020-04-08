@@ -16,7 +16,7 @@ html, body {
 }
 
 h1 {
-    margin-top: 20%;
+    margin-top: 15%;
     color: var(--medium);
     text-align: center;
     font-size: 500%;
@@ -37,11 +37,8 @@ h1 {
 #practice {
     width: 80vw;
     margin: 30px;
+    padding: 20px 40px;
     background-color: var(--light);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: column nowrap;
     border-radius: 25px;
     animation-delay: 2s;
     animation-duration: 2s;
@@ -51,8 +48,8 @@ h1 {
     color: white;
     font-family: 'Oxygen Mono', monospace;
     font-size: 2.5vh;
+    line-height: 30px;
     font-weight: lighter;
-    width: 90%;
     animation-duration: 4s;
     animation-timing-function: step-start;
     animation-iteration-count: infinite;

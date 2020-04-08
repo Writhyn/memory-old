@@ -6,29 +6,10 @@ const submitText = () => {
     
 }
 
-const removeText = () => {
-    const text = document.querySelector('#practiceText');
-    if (text.innerHTML === 'Paste text here, change difficulty level below') {
-        text.innerHTML = '';
-    }
+function removeText() {
+    this.innerHTML = '';
+    this.removeEventListener('click', removeText);
 }
-
-const showInstructions = () => {
-    document.querySelector('#instructions').classList.toggle('hidden');
-}
-
-document.querySelector('#practiceText').addEventListener("paste", function(e) {
-    // cancel paste
-    e.preventDefault();
-
-    // get text representation of clipboard
-    var text = (e.originalEvent || e).clipboardData.getData('text/plain');
-
-    // insert text manually
-    document.execCommand("insertHTML", false, text);
-
-    submitText();
-});
 
 const levelObj = {
     level: 0,
@@ -50,9 +31,24 @@ const levelObj = {
     }
 }
 
+document.querySelector('#practiceText').addEventListener("paste", function(e) {
+    // cancel paste
+    e.preventDefault();
+
+    // get text representation of clipboard
+    var text = (e.originalEvent || e).clipboardData.getData('text/plain');
+
+    // insert text manually
+    document.execCommand("insertHTML", false, text);
+
+    submitText();
+});
+
 document.querySelector('#practiceText').addEventListener('click', removeText);
 
-document.querySelector('#instructLink').addEventListener('click', showInstructions);
+document.querySelector('#instructLink').addEventListener('click', function() {
+    document.querySelector('#instructions').classList.toggle('hidden');
+});
 
 document.querySelector('#levelUp').addEventListener('click', () => levelObj.lvlUp());
 

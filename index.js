@@ -53,3 +53,11 @@ document.querySelector('#instructLink').addEventListener('click', function() {
 document.querySelector('#levelUp').addEventListener('click', () => levelObj.lvlUp());
 
 document.querySelector('#levelDown').addEventListener('click', () => levelObj.lvlDown());
+
+
+
+
+document.querySelector('#practiceText').addEventListener('keyup', (event) => {
+    let result = event.key.toLowerCase();
+    alert(result);
+});

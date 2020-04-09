@@ -6,11 +6,6 @@ const submitText = () => {
     
 }
 
-function removeText() {
-    this.innerHTML = '';
-    this.removeEventListener('click', removeText);
-}
-
 const levelObj = {
     level: 0,
     lvlUp: function() {
@@ -44,8 +39,6 @@ document.querySelector('#practiceText').addEventListener("paste", function(e) {
     submitText();
 });
 
-document.querySelector('#practiceText').addEventListener('click', removeText);
-
 document.querySelector('#instructLink').addEventListener('click', function() {
     document.querySelector('#instructions').classList.toggle('hidden');
 });
@@ -61,3 +54,4 @@ document.querySelector('#practiceText').addEventListener('keyup', (event) => {
     let result = event.key.toLowerCase();
     alert(result);
 });
+

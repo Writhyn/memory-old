@@ -56,6 +56,11 @@ h1 {
         animation-direction: reverse;
     }
 
+        #practiceText:empty:before {
+            content: attr(placeholder);
+            pointer-events: none;
+        }
+
         @keyframes blink1 {30% {opacity: 0%;}}
 
         @keyframes blink2 {45% {opacity: 0%;}}

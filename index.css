@@ -34,6 +34,13 @@ h1 {
         100% {text-shadow: 4px 4px 4px rgba(0,0,0,0.75);}
     }
 
+#machine {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap    ;
+}
+
 #practice {
     width: 80vw;
     
@@ -59,6 +66,7 @@ h1 {
         #practiceText:empty:before {
             content: attr(placeholder);
             pointer-events: none;
+            display: block;
         }
 
         @keyframes blink1 {30% {opacity: 0%;}}
@@ -80,6 +88,7 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 10px;
     color: var(--lightest);
     animation-delay: 2s;
     animation-duration: 1.6s;
@@ -99,6 +108,20 @@ h1 {
         #levelDown {
             border-right: 20px solid var(--light);
         }
+
+#reviewMode {
+    padding: 10px;
+    background-color: var(--lightest);
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 10px;
+    animation-delay: 2s;
+    animation-duration: 1.6s;
+}
+
+    .invisible {
+        opacity: 0;
+    }
 
 #instructLink {
     color: var(--lightest);

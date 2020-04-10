@@ -1,9 +1,10 @@
 let textArray = [];
+let blankArray = [];
 
 const submitText = () => {
-    const text = document.querySelector('#practiceText');
+    const text = document.querySelector('#practiceText').innerHTML;
     textArray = text.split(' ');
-    
+    blankArray = text.replace(/[a-z]/gi, '_').split(' ');
 }
 
 const levelObj = {
@@ -50,8 +51,26 @@ document.querySelector('#levelDown').addEventListener('click', () => levelObj.lv
 
 
 
-document.querySelector('#practiceText').addEventListener('keyup', (event) => {
-    let result = event.key.toLowerCase();
-    alert(result);
+
+const reviewMode = () => {
+    let index = 0;
+    document.querySelector('#practiceText').innerHTML = blankArray.join(' ');
+    window.addEventListener('keyup', (event) => {
+        const text = document.querySelector('#practiceText');
+        let result = event.key.toLowerCase();
+        if (result === textArray[index][0].toLowerCase()) {
+            blankArray[index] = textArray[index];
+            text.innerHTML = blankArray.join(' ');
+            index++;
+        }
+    });
+}
+
+document.querySelector('#reviewMode').addEventListener('click', function() {
+    if (document.querySelector('#practiceText').innerHTML) {
+        document.querySelector('#advance').classList.toggle('invisible');
+        reviewMode();
+    }
 });
+
 

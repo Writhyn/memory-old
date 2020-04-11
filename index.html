@@ -18,13 +18,23 @@
             <h2 id="practiceText" contenteditable="true" placeholder='Paste text here, change difficulty level below'></h2>
         </div>
 
-        <div id='advance' class="flicker-in-1">
-            <div id="levelDown" class="arrows"></div>
-            <h3 id="level">Level 0</h3>
-            <div id='levelUp' class="arrows"></div>
+        <div id="controls" class="flicker-in-1">
+            
+            
+            <div id='advance'>
+                <div id="levelDown" class="arrows"></div>
+                <h3 id="level">Level 0</h3>
+                <div id='levelUp' class="arrows"></div>
+            </div>
+
+            <div id="modeButtons">
+                <div id="memorize" class="modeButton">Memorize</div>
+                <div id="review" class="modeButton unselected">Review</div>
+            </div>
+            
         </div>
 
-        <div id="reviewMode" class="flicker-in-1">Review Mode</div>
+        
         
 
     </div>
@@ -32,7 +42,8 @@
     
 
     <p id="instructLink" class="flicker-in-1"><u>Instructions</u></p>
-    <div id='instructions' class="hidden">
+    <div id='instructions' class="hidden instructions">
+        <h3>Memorize Mode:</h3>
         <p>
         Welcome! This little machine is designed to facilitate a non-linear memorization technique I've found incredibly useful. The original method calls for writing or printing text on a card and carrying it around like some sort of savage. So, this being the 21st century, I made this little simulation.<br><br>
         The steps for its use are thus:
@@ -47,6 +58,13 @@
         Remember the 'non-linear' part I mentioned? This means your brain will pick up key words and phrases and fill in the between words afterwards. So don't worry about memorizing the words in order: when you mess up, don't start over! Just correct yourself on the spot and <em>keep reading</em>. It's better to follow a passage to its conclusion than to force a cutoff and restart. That's how neanderthals memorized things, and look what happened to them!
 
     </p>
+    </div>
+
+    <div id='instructions2' class="instructions hidden">
+        <h3>Review Mode:</h3>
+        <p>
+        Type the first letter of each word. If you get it wrong, the word will not fill in.
+        </p>
     </div>
     
 

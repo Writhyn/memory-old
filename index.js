@@ -94,19 +94,38 @@ const reviewMode = () => {
     let blankArray = proofText.replace(/[a-z]/gi, '_').split(' ');
 
     let index = 0;
+    let failTest = 0;
+    let tryAgain = 0;
     
     text.innerHTML = blankArray.join(' ');
+
+    const nextWord = () => {
+        text.innerHTML = blankArray.join(' ');
+        index++;
+        failTest = 0;
+    }
 
     const keyTest = () => {
         if (document.querySelector('#memorize').classList.contains('unselected')) {
             let result = event.key.toLowerCase();
             if (result === textArray[index][0].toLowerCase()) {
                 blankArray[index] = textArray[index];
-                text.innerHTML = blankArray.join(' ');
-                index++;
+                nextWord();
+            } else if (failTest === 2) {
+                blankArray[index] = '<span style="color: var(--darkest);">' + textArray[index] + '</span>';
+                nextWord();
+                tryAgain++;
+            } else {
+                failTest++;
             }
             if (textArray.slice(-1)[0] === blankArray.slice(-1)[0]) {
-                text.innerHTML = text.innerHTML + '<h3 style="text-align: center">' + congrats[Math.floor(Math.random() * 14)] + '</h3>'
+                if (tryAgain >= textArray.length / 10) {
+                    text.innerHTML = text.innerHTML + '<h3 style="text-align: center; color: var(--darkest);">' + 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!' + '</h3><h4 style="text-align: center; color: var(--dark);">' + "(Click 'Instructions' for some extra tips!)" + '</h4>';
+                } else if (tryAgain) {
+                    text.innerHTML = text.innerHTML + '<h3 style="text-align: center; color: var(--darkest);">' + 'Sooooooo close! Give it another try, I triple-dog dare you!' + '</h3><h4 style="text-align: center; color: var(--dark);">' + "(Click 'Instructions' for some extra tips!)" + '</h4>';
+                } else {
+                    text.innerHTML = text.innerHTML + '<h3 style="text-align: center; color: var(--darkest);">' + congrats[Math.floor(Math.random() * 13)] + '</h3><h4 style="text-align: center; color: var(--dark);">' + "(Don't forget to practice regularly!)" + '</h4>';
+                }
                 window.removeEventListener('keyup', keyTest);
             }
         }

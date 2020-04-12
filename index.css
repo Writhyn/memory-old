@@ -13,6 +13,7 @@ html, body {
     height: 100%;
     font-family: 'Oxygen', sans-serif;
     background-color: var(--medium);
+    padding: 40px;
 }
 
 h1 {
@@ -139,12 +140,14 @@ h1 {
     animation-delay: 3s;
     color: var(--lightest);
     cursor: pointer;
+    
 }
 
     .instructions {
         color: var(--lightest);
         text-align: justify;
         width: 80%;
+        
     }
 
         .hidden {

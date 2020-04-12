@@ -67,6 +67,23 @@ const unselectButton = () => {
 
 
 const reviewMode = () => {
+
+    const congrats = [
+        "Keep being awesome, and I'll keep saying congratulations.",
+        "Your future is looking so bright that I need sunglasses.",
+        "Your future is no longer uncertain. You have achieved your goals.",
+        "I am successful just by knowing you. I'll congratulate myself.",
+        "Please stop giving me so many reasons to be impressed. I'm getting overwhelmed.",
+        "There are only so many ways for me to say congratulations, and I've used up most of them.",
+        "I need to congratulate both of us because I knew you'd be successful!",
+        "Sometimes I make a big deal about nothing, but this time I'm not exaggerating. Way to go!",
+        "I'm thinking of a word for you that stats with 'C' and ends in 'ongratulations.'",
+        "You have performed extremely adequately!",
+        "I have so much pride in my heart right now. It might even be a sin.",
+        "I love your accomplishments almost as much as I love the person who did them.",
+        "I can't think of any advice I need to give you. You have proven your competence.",
+    ];
+
     unselectButton();
     document.querySelector('#advance').classList.toggle('invisible');
     updateProofText();
@@ -89,7 +106,7 @@ const reviewMode = () => {
                 index++;
             }
             if (textArray.slice(-1)[0] === blankArray.slice(-1)[0]) {
-                text.innerHTML = text.innerHTML + '<h2 style="text-align: center">Congrats!</h2>'
+                text.innerHTML = text.innerHTML + '<h3 style="text-align: center">' + congrats[Math.floor(Math.random() * 14)] + '</h3>'
                 window.removeEventListener('keyup', keyTest);
             }
         }

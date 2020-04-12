@@ -114,7 +114,7 @@ const reviewMode = () => {
     const keyTest = () => {
         if (document.querySelector('#memorize').classList.contains('unselected')) {
             let result = event.key.toLowerCase(); // This turns the keycode to lowercase for checks
-            alert(result);
+            // alert(result);
             let num = textArray[index].search(/[a-z]/i); //This prevents elements starting with punctuation (like quotes) from breaking things
             
             if (result === textArray[index][num].toLowerCase()) { //this checks keycode against the first letter of the el in textarray that corresponds with the current blank

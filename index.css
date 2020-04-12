@@ -6,9 +6,10 @@
     --darkest: #051A39;
 }
 
-html, body {
+body {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-flow: column nowrap;
     height: 100%;
     font-family: 'Oxygen', sans-serif;
@@ -51,6 +52,10 @@ h1 {
     animation-delay: 2s;
     animation-duration: 2s;
 }
+
+    .brood {
+        color: var(--darkest);
+    }
 
     #practiceText {
         color: white;

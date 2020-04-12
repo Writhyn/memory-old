@@ -123,7 +123,7 @@ const reviewMode = () => {
             } else {
                 failTest++;
             }
-            if (textArray.slice(-1)[0] === blankArray.slice(-1)[0]) {
+            if (blankArray.slice(-1)[0][0] !== '_') {
                 if (tryAgain >= textArray.length / 10) {
                     text.innerHTML = text.innerHTML + '<h3 style="text-align: center; color: var(--darkest);">' + 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!' + '</h3><h4 style="text-align: center; color: var(--dark);">' + "(Click 'Instructions' for some extra tips!)" + '</h4>';
                 } else if (tryAgain) {

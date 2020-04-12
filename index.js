@@ -134,12 +134,13 @@ const reviewMode = () => {
                 } else {
                     text.innerHTML = text.innerHTML + '<h3 style="text-align: center; color: var(--darkest);">' + congrats[Math.floor(Math.random() * 13)] + '</h3><h4 style="text-align: center; color: var(--dark);">' + "(Don't forget to practice regularly!)" + '</h4>';
                 }
-                window.removeEventListener('input', keyTest);
+                window.removeEventListener('keyup', keyTest);
             }
         }
     }
 
-    window.addEventListener('input', keyTest);
+    window.addEventListener('keyup', keyTest);
+
 }
 
 const memorizeMode = () => {

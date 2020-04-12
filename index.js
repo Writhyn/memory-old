@@ -1,7 +1,8 @@
-let proofText = '';
-
-const updateProofText = () => {
-    return proofText = document.querySelector('#practiceText').innerHTML;
+const proofText = {
+    text: '', // this establishes what will become the master text used when making checks or switching between modes
+    update: function() {
+        return this.text = document.querySelector('#practiceText').innerHTML; // this makes prooftext current with whatever is in the practice text
+    }
 }
 
 const levelObj = {
@@ -40,7 +41,7 @@ document.querySelector('#practiceText').addEventListener("paste", function(e) {
 
     document.querySelector('#controls').classList.remove('invisible');
 
-    updateProofText();
+    proofText.update();
 });
 
 
@@ -48,7 +49,7 @@ document.querySelector('#levelUp').addEventListener('click', () => levelObj.lvlU
 
 document.querySelector('#levelDown').addEventListener('click', () => levelObj.lvlDown());
 
-document.querySelector('#practiceText').addEventListener('input', updateProofText);
+document.querySelector('#practiceText').addEventListener('input', () => proofText.update());
 
 document.querySelector('#instructLink').addEventListener('click', function() {
     if (document.querySelector('#review').classList.contains('unselected')) {
@@ -91,12 +92,12 @@ const reviewMode = () => {
 
     unselectButton();
     document.querySelector('#advance').classList.toggle('invisible');
-    updateProofText();
+    proofText.update();
     levelObj.lvlRefresh();
     const text = document.querySelector('#practiceText');
     text.contentEditable = 'false';
-    let textArray = proofText.split(' ');
-    let blankArray = proofText.replace(/[a-z]/gi, '_').split(' ');
+    let textArray = proofText.text.split(' ');
+    let blankArray = proofText.text.replace(/[a-z]/gi, '_').split(' ');
 
     let index = 0;
     let failTest = 0;
@@ -105,16 +106,18 @@ const reviewMode = () => {
     text.innerHTML = blankArray.join(' ');
 
     const nextWord = () => {
-        text.innerHTML = blankArray.join(' ');
-        index++;
-        failTest = 0;
+        text.innerHTML = blankArray.join(' '); // this displays the current blankarray in the practice text
+        index++; // this advances the word being checked to the next blank
+        failTest = 0; // this resets the number of mistyped key attempts
     }
 
     const keyTest = () => {
         if (document.querySelector('#memorize').classList.contains('unselected')) {
-            let result = event.key.toLowerCase();
-            if (result === textArray[index][0].toLowerCase()) {
-                blankArray[index] = textArray[index];
+            let result = event.key.toLowerCase(); // This turns the keycode to lowercase for checks
+            let num = textArray[index].search(/[a-z]/i); //This prevents elements starting with punctuation (like quotes) from breaking things
+            
+            if (result === textArray[index][num].toLowerCase()) { //this checks keycode against the first letter of the el in textarray that corresponds with the current blank
+                blankArray[index] = textArray[index]; // this changes the current blank to the corresponding el from textarray
                 nextWord();
             } else if (failTest === 2) {
                 blankArray[index] = '<span style="color: var(--darkest);">' + textArray[index] + '</span>';
@@ -144,14 +147,14 @@ const memorizeMode = () => {
     unselectButton();
     const text = document.querySelector('#practiceText');
     text.contentEditable = 'true';
-    text.innerHTML = proofText;
+    text.innerHTML = proofText.text;
 
     document.querySelector('#advance').classList.toggle('invisible');
     
 }
 
 document.querySelector('#review').addEventListener('click', function() {
-    if (proofText && this.classList.contains('unselected')) {
+    if (proofText.text && this.classList.contains('unselected')) {
         reviewMode();
     }
 });

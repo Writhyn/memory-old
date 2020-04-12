@@ -44,6 +44,7 @@ document.querySelector('#practiceText').addEventListener("paste", function(e) {
     proofText.update();
 });
 
+
 document.querySelector('#levelUp').addEventListener('click', () => levelObj.lvlUp());
 
 document.querySelector('#levelDown').addEventListener('click', () => levelObj.lvlDown());

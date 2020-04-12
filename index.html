@@ -18,24 +18,37 @@
             <h2 id="practiceText" contenteditable="true" placeholder='Paste text here, change difficulty level below'></h2>
         </div>
 
-        <div id='advance' class="flicker-in-1">
-            <div id="levelDown" class="arrows"></div>
-            <h3 id="level">Level 0</h3>
-            <div id='levelUp' class="arrows"></div>
-        
+        <div id="controls" class="flicker-in-1">
+            
+            
+            <div id='advance'>
+                <div id="levelDown" class="arrows"></div>
+                <h3 id="level">Level 0</h3>
+                <div id='levelUp' class="arrows"></div>
+            </div>
+
+            <div id="modeButtons">
+                <div id="memorize" class="modeButton">Memorize</div>
+                <div id="review" class="modeButton unselected">Review</div>
+            </div>
+            
         </div>
+
+        
+        
 
     </div>
 
     
 
     <p id="instructLink" class="flicker-in-1"><u>Instructions</u></p>
-    <div id='instructions' class="hidden">
+    <div id='instructions' class="hidden instructions">
+        <h3>Memorize Mode:</h3>
         <p>
         Welcome! This little machine is designed to facilitate a non-linear memorization technique I've found incredibly useful. The original method calls for writing or printing text on a card and carrying it around like some sort of savage. So, this being the 21st century, I made this little simulation.<br><br>
         The steps for its use are thus:
         <ol>
-            <li>Paste the passage you wish to memorize into the block above. I recommend a short paragraph at a time</li>
+            <li>Paste the passage you wish to memorize into the block above. <em>I recommend a short paragraph at a time</em></li>
             <li>Read the text <em>out loud</em> a few times until you are comfortable with it, then advance to level 1</li>
             <li>Continue to read the text out loud naturally. Once you can do so smoothly - even while the text is gone - move to the next level</li>
             <li>Do the same for each level, only advance when you are able read naturally, as if the text is always there*</li>
@@ -45,6 +58,15 @@
         Remember the 'non-linear' part I mentioned? This means your brain will pick up key words and phrases and fill in the between words afterwards. So don't worry about memorizing the words in order: when you mess up, don't start over! Just correct yourself on the spot and <em>keep reading</em>. It's better to follow a passage to its conclusion than to force a cutoff and restart. That's how neanderthals memorized things, and look what happened to them!
 
     </p>
+    </div>
+
+    <div id='instructions2' class="instructions hidden">
+        <h3>Review Mode:</h3>
+        <p>
+        Type the first letter of each word. If you get it wrong three times, the word will fill in and sit there brooding darkly. This will help you identify weaker areas in your memorization.<br><br>
+        If you make a few mistakes like this, don't start over! Finish the passage, and then read it aloud while savagely emphasizing the words you missed. This will help imprint those tricky words in your brain for your next try.<br><br>
+        Ultimately you should be pushing for a perfect score. After all, it's called 'memorization', not 'approximation'. You got this!
+        </p>
     </div>
     
 

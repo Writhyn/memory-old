@@ -6,13 +6,15 @@
     --darkest: #051A39;
 }
 
-html, body {
+body {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-flow: column nowrap;
     height: 100%;
     font-family: 'Oxygen', sans-serif;
     background-color: var(--medium);
+    padding: 40px;
 }
 
 h1 {
@@ -34,6 +36,13 @@ h1 {
         100% {text-shadow: 4px 4px 4px rgba(0,0,0,0.75);}
     }
 
+#machine {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap    ;
+}
+
 #practice {
     width: 80vw;
     
@@ -43,6 +52,10 @@ h1 {
     animation-delay: 2s;
     animation-duration: 2s;
 }
+
+    .brood {
+        color: var(--darkest);
+    }
 
     #practiceText {
         color: white;
@@ -77,19 +90,27 @@ h1 {
             100% {opacity: 0;}
         }
 
+#controls {
+    animation-delay: 2s;
+    animation-duration: 1.6s;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
 #advance {
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--lightest);
-    animation-delay: 2s;
-    animation-duration: 1.6s;
+    
 }
 
     .arrows {
         border-top: 20px solid transparent;
         border-bottom: 20px solid transparent;
-        margin: 10px;
+        margin: 0px 10px;
         border-radius: 20px;
     }
 
@@ -101,17 +122,37 @@ h1 {
             border-right: 20px solid var(--light);
         }
 
-#instructLink {
-    color: var(--lightest);
+.modeButton {
+    margin: 10px;
+    padding: 10px;
+    background-color: var(--lightest);
+    color: var(--darkest);
     cursor: pointer;
-    animation-duration: 1s;
-    animation-delay: 3s;
+    display: inline-block;
+    border-radius: 10px;
 }
 
-    #instructions {
+    .unselected {
+        opacity: 50%;
+    }
+
+    .invisible {
+        visibility: hidden;
+    }
+
+#instructLink {
+    animation-duration: 1s;
+    animation-delay: 3s;
+    color: var(--lightest);
+    cursor: pointer;
+    
+}
+
+    .instructions {
         color: var(--lightest);
         text-align: justify;
         width: 80%;
+        
     }
 
         .hidden {

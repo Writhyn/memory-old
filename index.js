@@ -3,6 +3,7 @@ const proofText = {
     update: function() {
         return this.text = document.querySelector('#practiceText').innerHTML; // this makes prooftext current with whatever is in the practice text
     }
+}
 
 const levelObj = {
     level: 0,

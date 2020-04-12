@@ -48,6 +48,8 @@ document.querySelector('#levelUp').addEventListener('click', () => levelObj.lvlU
 
 document.querySelector('#levelDown').addEventListener('click', () => levelObj.lvlDown());
 
+document.querySelector('#practiceText').addEventListener('input', updateProofText);
+
 document.querySelector('#instructLink').addEventListener('click', function() {
     if (document.querySelector('#review').classList.contains('unselected')) {
         document.querySelector('#instructions'  ).classList.toggle('hidden');
@@ -55,6 +57,9 @@ document.querySelector('#instructLink').addEventListener('click', function() {
         document.querySelector('#instructions2').classList.toggle('hidden');
     }
 });
+
+
+
 
 
 

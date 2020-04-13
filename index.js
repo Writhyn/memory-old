@@ -117,7 +117,7 @@ const reviewMode = () => {
 
             let result;
             
-            if (window.matchMedia("(hover: none)").matches) {
+            if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
                 result = event.target.value.toLowerCase();
                 document.querySelector('#mobile').value = '';
               } else {
@@ -151,7 +151,7 @@ const reviewMode = () => {
 
     //==========================================================================
 
-    if (window.matchMedia("(hover: none)").matches) {
+    if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
         document.querySelector('#mobile').addEventListener('input', keyTest);
       } else {
         window.addEventListener('keyup', keyTest);

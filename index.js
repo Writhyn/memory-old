@@ -69,6 +69,8 @@ const unselectButton = () => {
     document.querySelector('#review').classList.toggle('unselected');
     document.querySelector('#instructions').classList.add('hidden');
     document.querySelector('#instructions2').classList.add('hidden');
+    document.querySelector('#advance').classList.toggle('invisible');
+    document.querySelector('#mobile').classList.toggle('hidden');
 }
 
 
@@ -91,7 +93,6 @@ const reviewMode = () => {
     ];
 
     unselectButton();
-    document.querySelector('#advance').classList.toggle('invisible');
     proofText.update();
     levelObj.lvlRefresh();
     const text = document.querySelector('#practiceText');
@@ -113,8 +114,16 @@ const reviewMode = () => {
 
     const keyTest = () => {
         if (document.querySelector('#memorize').classList.contains('unselected')) {
-            let result = event.key.toLowerCase(); // This turns the keycode to lowercase for checks
-            // alert(result);
+
+            let result;
+            
+            if (window.matchMedia("(hover: none)").matches) {
+                result = event.target.value.toLowerCase();
+                document.querySelector('#mobile').value = '';
+              } else {
+                result = event.key.toLowerCase(); // This turns the keycode to lowercase for checks
+              }
+            
             let num = textArray[index].search(/[a-z]/i); //This prevents elements starting with punctuation (like quotes) from breaking things
             
             if (result === textArray[index][num].toLowerCase()) { //this checks keycode against the first letter of the el in textarray that corresponds with the current blank
@@ -140,8 +149,17 @@ const reviewMode = () => {
         }
     }
 
-    window.addEventListener('keyup', keyTest);
+    //==========================================================================
 
+    if (window.matchMedia("(hover: none)").matches) {
+        document.querySelector('#mobile').addEventListener('input', keyTest);
+      } else {
+        window.addEventListener('keyup', keyTest);
+      }
+
+    //==========================================================================
+
+    
 }
 
 const memorizeMode = () => {
@@ -149,10 +167,10 @@ const memorizeMode = () => {
     const text = document.querySelector('#practiceText');
     text.contentEditable = 'true';
     text.innerHTML = proofText.text;
-
-    document.querySelector('#advance').classList.toggle('invisible');
     
 }
+
+
 
 document.querySelector('#review').addEventListener('click', function() {
     if (proofText.text && this.classList.contains('unselected')) {

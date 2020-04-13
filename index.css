@@ -99,6 +99,22 @@ h1 {
     justify-content: center;
 }
 
+.mobile {
+    border: none;
+    background-color: var(--darkest);
+    color: var(--lightest);
+    margin: 20px 0 -46px 0;
+    padding: 5px;
+    text-align: center;
+    display: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .mobile-show {
+        display: inline;
+    }
+}
+
 #advance {
     display: flex;
     align-items: center;

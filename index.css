@@ -109,7 +109,7 @@ h1 {
     display: none;
 }
 
-@media (hover: none) and (pointer: coarse) {
+@media (hover: none), (max-width: 500px) {
     .mobile-show {
         display: inline;
     }

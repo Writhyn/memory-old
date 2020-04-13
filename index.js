@@ -114,10 +114,15 @@ const reviewMode = () => {
 
     const keyTest = () => {
         if (document.querySelector('#memorize').classList.contains('unselected')) {
-            // let result = event.key.toLowerCase(); // This turns the keycode to lowercase for checks
-            let result = event.target.value.toLowerCase();
-            document.querySelector('#mobile').value = '';
 
+            let result;
+            
+            if (window.matchMedia("(hover: none)").matches) {
+                result = event.target.value.toLowerCase();
+                document.querySelector('#mobile').value = '';
+              } else {
+                result = event.key.toLowerCase(); // This turns the keycode to lowercase for checks
+              }
             
             let num = textArray[index].search(/[a-z]/i); //This prevents elements starting with punctuation (like quotes) from breaking things
             

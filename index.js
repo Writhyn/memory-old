@@ -1,7 +1,25 @@
+const practiceText = document.querySelector('#practiceText');
+
+const congrats = [
+    "Keep being awesome, and I'll keep saying congratulations.",
+    "Your future is looking so bright that I need sunglasses.",
+    "Your future is no longer uncertain. You have achieved your goals.",
+    "I am successful just by knowing you. I'll congratulate myself, too!",
+    "Please stop giving me so many reasons to be impressed. I'm getting overwhelmed.",
+    "There are only so many ways for me to say congratulations, and I'll use them all!",
+    "I need to congratulate both of us because I knew you'd be successful!",
+    "Sometimes I make a big deal about nothing, but this time I'm not exaggerating. Way to go!",
+    "I'm thinking of a word for you that starts with 'C' and ends in 'ongratulations.'",
+    "You have performed extremely adequately!",
+    "I have so much pride in my heart right now. Is that wrong?",
+    "I love your accomplishments almost as much as I love the person who did them.",
+    "I can't think of any advice I need to give you. You have proven your competence.",
+];
+
 const proofText = {
     text: '', // this establishes what will become the master text used when making checks or switching between modes
     update: function() {
-        return this.text = document.querySelector('#practiceText').innerHTML; // this makes prooftext current with whatever is in the practice text
+        return this.text = practiceText.innerHTML; // this makes prooftext current with whatever is in the practice text
     }
 }
 
@@ -21,7 +39,7 @@ const levelObj = {
     },
     lvlChange: function() {
         document.querySelector('#level').innerHTML = 'Level ' + this.level;
-        document.querySelector('#practiceText').style.webkitAnimationName = 'blink' + this.level;
+        practiceText.style.webkitAnimationName = 'blink' + this.level;
     },
     lvlRefresh: function() {
         this.level = 0;
@@ -29,7 +47,7 @@ const levelObj = {
     }
 }
 
-document.querySelector('#practiceText').addEventListener("paste", function(e) {
+practiceText.addEventListener("paste", function(e) {
     // cancel paste
     e.preventDefault();
 
@@ -41,24 +59,21 @@ document.querySelector('#practiceText').addEventListener("paste", function(e) {
 
     document.querySelector('#controls').classList.remove('invisible');
 
-    proofText.update();
 });
 
 document.querySelector('#sample').addEventListener('click', function() {
     this.classList.add('hidden');
     document.querySelector('#shake').style.flexFlow = 'column nowrap';
-    document.querySelector('#practiceText').innerHTML = 'This you know, my beloved brethren, but everyone must be quick to hear, slow to speak, and slow to anger; for the anger of man does not achieve the righteousness of God.';
-    proofText.update();
+    practiceText.innerText = 'This you know, my beloved brethren, but everyone must be quick to hear, slow to speak, and slow to anger; for the anger of man does not achieve the righteousness of God.';
 })
 
 document.querySelector('#levelUp').addEventListener('click', () => levelObj.lvlUp());
 
 document.querySelector('#levelDown').addEventListener('click', () => levelObj.lvlDown());
 
-document.querySelector('#practiceText').addEventListener('input', function() {
+practiceText.addEventListener('input', function() {
     document.querySelector('#sample').classList.add('hidden');
     document.querySelector('#shake').style.flexFlow = 'column nowrap';
-    proofText.update();
 });
 
 document.querySelector('#instructLink').addEventListener('click', function() {
@@ -77,43 +92,23 @@ const errorShake = () => {
 }
 
 
-
-
-
-
 const unselectButton = () => {
     document.querySelector('#memorize').classList.toggle('unselected');
     document.querySelector('#review').classList.toggle('unselected');
     document.querySelector('#instructions').classList.add('hidden');
     document.querySelector('#instructions2').classList.add('hidden');
     document.querySelector('#advance').classList.toggle('invisible');
-    document.querySelector('#mobile').classList.toggle('hidden');
+    document.querySelector('.mobile').classList.toggle('hidden');
 }
 
 
 const reviewMode = () => {
 
-    const congrats = [
-        "Keep being awesome, and I'll keep saying congratulations.",
-        "Your future is looking so bright that I need sunglasses.",
-        "Your future is no longer uncertain. You have achieved your goals.",
-        "I am successful just by knowing you. I'll congratulate myself, too!",
-        "Please stop giving me so many reasons to be impressed. I'm getting overwhelmed.",
-        "There are only so many ways for me to say congratulations, and I'll use them all!",
-        "I need to congratulate both of us because I knew you'd be successful!",
-        "Sometimes I make a big deal about nothing, but this time I'm not exaggerating. Way to go!",
-        "I'm thinking of a word for you that stats with 'C' and ends in 'ongratulations.'",
-        "You have performed extremely adequately!",
-        "I have so much pride in my heart right now. Is that wrong?",
-        "I love your accomplishments almost as much as I love the person who did them.",
-        "I can't think of any advice I need to give you. You have proven your competence.",
-    ];
-
     unselectButton();
     proofText.update();
     levelObj.lvlRefresh();
-    const text = document.querySelector('#practiceText');
-    text.contentEditable = 'false';
+
+    practiceText.contentEditable = 'false';
     let textArray = proofText.text.split(' ');
     let blankArray = proofText.text.replace(/[a-z]/gi, '_').split(' ');
 
@@ -121,10 +116,10 @@ const reviewMode = () => {
     let failTest = 0;
     let tryAgain = 0;
     
-    text.innerHTML = blankArray.join(' ');
+    practiceText.innerHTML = blankArray.join(' ');
 
     const nextWord = () => {
-        text.innerHTML = blankArray.join(' '); // this displays the current blankarray in the practice text
+        practiceText.innerHTML = blankArray.join(' '); // this displays the current blankarray in the practice text
         index++; // this advances the word being checked to the next blank
         failTest = 0; // this resets the number of mistyped key attempts
     }
@@ -136,7 +131,7 @@ const reviewMode = () => {
             
             if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
                 result = event.target.value.toLowerCase();
-                document.querySelector('#mobile').value = '';
+                document.querySelector('.mobile').value = '';
               } else {
                 result = event.key.toLowerCase(); // This turns the keycode to lowercase for checks
               }
@@ -154,12 +149,13 @@ const reviewMode = () => {
                 errorShake();
                 failTest++;
             }
+            
             if (blankArray.slice(-1)[0][0] !== '_') {
                 const done = document.querySelector('#done');
                 const doneSub = document.querySelector('#doneSub');
                 done.classList.remove('hidden');
                 doneSub.classList.remove('hidden');
-                if (tryAgain >= textArray.length / 2) {
+                if (tryAgain >= textArray.length / 10) {
                     done.innerHTML = 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!';
                     doneSub.innerHTML = "(Click 'Instructions' for some extra tips!)";
                 } else if (tryAgain) {
@@ -183,7 +179,7 @@ const reviewMode = () => {
     //==========================================================================
 
     if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
-        document.querySelector('#mobile').addEventListener('input', keyTest);
+        document.querySelector('.mobile').addEventListener('input', keyTest);
       } else {
         window.addEventListener('keyup', keyTest);
       }
@@ -197,16 +193,16 @@ const memorizeMode = () => {
     document.querySelector('#done').classList.add('hidden');
     document.querySelector('#doneSub').classList.add('hidden');
     unselectButton();
-    const text = document.querySelector('#practiceText');
-    text.contentEditable = 'true';
-    text.innerHTML = proofText.text;
+
+    practiceText.contentEditable = 'true';
+    practiceText.innerHTML = proofText.text;
     
 }
 
 
 
 document.querySelector('#review').addEventListener('click', function() {
-    if (proofText.text && this.classList.contains('unselected')) {
+    if (practiceText.innerHTML && this.classList.contains('unselected')) {
         reviewMode();
     } else {
         errorShake();

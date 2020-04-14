@@ -67,6 +67,13 @@ document.querySelector('#instructLink').addEventListener('click', function() {
     }
 });
 
+const errorShake = () => {
+    document.querySelector('#shake').classList.add('shake-horizontal');
+    setTimeout(function() {
+        document.querySelector('#shake').classList.remove('shake-horizontal');
+    }, 500);
+}
+
 
 
 
@@ -142,10 +149,7 @@ const reviewMode = () => {
                 nextWord();
                 tryAgain++;
             } else {
-                document.querySelector('#shake').classList.add('shake-horizontal');
-                setTimeout(function() {
-                    document.querySelector('#shake').classList.remove('shake-horizontal');
-                }, 500);
+                errorShake();
                 failTest++;
             }
             if (blankArray.slice(-1)[0][0] !== '_') {
@@ -188,10 +192,7 @@ document.querySelector('#review').addEventListener('click', function() {
     if (proofText.text && this.classList.contains('unselected')) {
         reviewMode();
     } else {
-        document.querySelector('#practiceText').style.color = 'var(--darkest)';
-        setTimeout(function() {
-            document.querySelector('#practiceText').style.color = 'white';
-        }, 500)
+        errorShake();
     }
 });
 

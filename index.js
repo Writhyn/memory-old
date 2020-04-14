@@ -159,11 +159,17 @@ const reviewMode = () => {
                 const doneSub = document.querySelector('#doneSub');
                 done.classList.remove('hidden');
                 doneSub.classList.remove('hidden');
-                if (tryAgain >= textArray.length / 10) {
+                if (tryAgain >= textArray.length / 2) {
                     done.innerHTML = 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!';
                     doneSub.innerHTML = "(Click 'Instructions' for some extra tips!)";
                 } else if (tryAgain) {
                     done.innerHTML = 'Sooooooo close! <u>Give it another try</u>, I triple-dog dare you!';
+                    done.style.cursor = 'pointer';
+                    done.addEventListener('click', function() {
+                        done.style.cursor = 'auto';
+                        memorizeMode();
+                        reviewMode();
+                    })
                     doneSub.innerHTML = "(Click 'Instructions' for some extra tips!)";
                 } else {
                     done.innerHTML = congrats[Math.floor(Math.random() * 13)];

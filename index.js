@@ -142,6 +142,10 @@ const reviewMode = () => {
                 nextWord();
                 tryAgain++;
             } else {
+                document.querySelector('#shake').classList.add('shake-horizontal');
+                setTimeout(function() {
+                    document.querySelector('#shake').classList.remove('shake-horizontal');
+                }, 500);
                 failTest++;
             }
             if (blankArray.slice(-1)[0][0] !== '_') {

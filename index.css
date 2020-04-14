@@ -71,7 +71,7 @@ h1 {
 
     #practiceText {
         color: white;
-        min-width: 80%;
+        width: 100%;
         font-family: 'Oxygen Mono', monospace;
         font-size: 2.2vh;
         line-height: 30px;

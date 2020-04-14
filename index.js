@@ -45,7 +45,7 @@ document.querySelector('#practiceText').addEventListener("paste", function(e) {
 });
 
 document.querySelector('#sample').addEventListener('click', function() {
-    this.classList.toggle('hidden');
+    this.classList.add('hidden');
     document.querySelector('#practiceText').innerHTML = 'This you know, my beloved brethren, but everyone must be quick to hear, slow to speak, and slow to anger; for the anger of man does not achieve the righteousness of God.';
     proofText.update();
 })

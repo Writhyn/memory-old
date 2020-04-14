@@ -123,12 +123,12 @@ h1 {
             100% {opacity: 0;}
         }
 
-        .done {
+        #done {
             text-align: center;
             color: var(--darkest);
         }
 
-        .doneSub {
+        #doneSub {
             text-align: center;
             color: var(--dark)
         }

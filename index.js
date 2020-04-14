@@ -46,6 +46,7 @@ document.querySelector('#practiceText').addEventListener("paste", function(e) {
 
 document.querySelector('#sample').addEventListener('click', function() {
     this.classList.add('hidden');
+    document.querySelector('#shake').style.flexFlow = 'column nowrap';
     document.querySelector('#practiceText').innerHTML = 'This you know, my beloved brethren, but everyone must be quick to hear, slow to speak, and slow to anger; for the anger of man does not achieve the righteousness of God.';
     proofText.update();
 })
@@ -56,6 +57,7 @@ document.querySelector('#levelDown').addEventListener('click', () => levelObj.lv
 
 document.querySelector('#practiceText').addEventListener('input', function() {
     document.querySelector('#sample').classList.add('hidden');
+    document.querySelector('#shake').style.flexFlow = 'column nowrap';
     proofText.update();
 });
 
@@ -153,12 +155,19 @@ const reviewMode = () => {
                 failTest++;
             }
             if (blankArray.slice(-1)[0][0] !== '_') {
+                const done = document.querySelector('#done');
+                const doneSub = document.querySelector('#doneSub');
+                done.classList.toggle('hidden');
+                doneSub.classList.toggle('hidden');
                 if (tryAgain >= textArray.length / 10) {
-                    text.innerHTML = text.innerHTML + '<h3 style="text-align: center; color: var(--darkest);">' + 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!' + '</h3><h4 style="text-align: center; color: var(--dark);">' + "(Click 'Instructions' for some extra tips!)" + '</h4>';
+                    done.innerHTML = 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!';
+                    doneSub.innerHTML = "(Click 'Instructions' for some extra tips!)";
                 } else if (tryAgain) {
-                    text.innerHTML = text.innerHTML + '<h3 style="text-align: center; color: var(--darkest);">' + 'Sooooooo close! <u>Give it another try</u>, I triple-dog dare you!' + '</h3><h4 style="text-align: center; color: var(--dark);">' + "(Click 'Instructions' for some extra tips!)" + '</h4>';
+                    done.innerHTML = 'Sooooooo close! <u>Give it another try</u>, I triple-dog dare you!';
+                    doneSub.innerHTML = "(Click 'Instructions' for some extra tips!)";
                 } else {
-                    text.innerHTML = text.innerHTML + '<h3 style="text-align: center; color: var(--darkest);">' + congrats[Math.floor(Math.random() * 13)] + '</h3><h4 style="text-align: center; color: var(--dark);">' + "(Don't forget to practice regularly!)" + '</h4>';
+                    done.innerHTML = congrats[Math.floor(Math.random() * 13)];
+                    doneSub.innerHTML = "(Don't forget to practice regularly!)";
                 }
                 window.removeEventListener('keyup', keyTest);
             }
@@ -179,6 +188,8 @@ const reviewMode = () => {
 }
 
 const memorizeMode = () => {
+    document.querySelector('#done').classList.toggle('hidden');
+    document.querySelector('#doneSub').classList.toggle('hidden');
     unselectButton();
     const text = document.querySelector('#practiceText');
     text.contentEditable = 'true';

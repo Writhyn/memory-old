@@ -157,8 +157,8 @@ const reviewMode = () => {
             if (blankArray.slice(-1)[0][0] !== '_') {
                 const done = document.querySelector('#done');
                 const doneSub = document.querySelector('#doneSub');
-                done.classList.toggle('hidden');
-                doneSub.classList.toggle('hidden');
+                done.classList.remove('hidden');
+                doneSub.classList.remove('hidden');
                 if (tryAgain >= textArray.length / 10) {
                     done.innerHTML = 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!';
                     doneSub.innerHTML = "(Click 'Instructions' for some extra tips!)";
@@ -188,8 +188,8 @@ const reviewMode = () => {
 }
 
 const memorizeMode = () => {
-    document.querySelector('#done').classList.toggle('hidden');
-    document.querySelector('#doneSub').classList.toggle('hidden');
+    document.querySelector('#done').classList.add('hidden');
+    document.querySelector('#doneSub').classList.add('hidden');
     unselectButton();
     const text = document.querySelector('#practiceText');
     text.contentEditable = 'true';

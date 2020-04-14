@@ -21,7 +21,7 @@ const levelObj = {
     },
     lvlChange: function() {
         document.querySelector('#level').innerHTML = 'Level ' + this.level;
-        document.querySelector('#practiceText').style.animationName = 'blink' + this.level;
+        document.querySelector('#practiceText').style.webkitAnimationName = 'blink' + this.level;
     },
     lvlRefresh: function() {
         this.level = 0;

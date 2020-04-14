@@ -44,12 +44,20 @@ document.querySelector('#practiceText').addEventListener("paste", function(e) {
     proofText.update();
 });
 
+document.querySelector('#sample').addEventListener('click', function() {
+    this.classList.toggle('hidden');
+    document.querySelector('#practiceText').innerHTML = 'This you know, my beloved brethren, but everyone must be quick to hear, slow to speak, and slow to anger; for the anger of man does not achieve the righteousness of God.';
+    proofText.update();
+})
 
 document.querySelector('#levelUp').addEventListener('click', () => levelObj.lvlUp());
 
 document.querySelector('#levelDown').addEventListener('click', () => levelObj.lvlDown());
 
-document.querySelector('#practiceText').addEventListener('input', () => proofText.update());
+document.querySelector('#practiceText').addEventListener('input', function() {
+    document.querySelector('#sample').classList.add('hidden');
+    proofText.update();
+});
 
 document.querySelector('#instructLink').addEventListener('click', function() {
     if (document.querySelector('#review').classList.contains('unselected')) {
@@ -87,7 +95,7 @@ const reviewMode = () => {
         "Sometimes I make a big deal about nothing, but this time I'm not exaggerating. Way to go!",
         "I'm thinking of a word for you that stats with 'C' and ends in 'ongratulations.'",
         "You have performed extremely adequately!",
-        "I have so much pride in my heart right now. It might even be a sin.",
+        "I have so much pride in my heart right now. Is that wrong?",
         "I love your accomplishments almost as much as I love the person who did them.",
         "I can't think of any advice I need to give you. You have proven your competence.",
     ];
@@ -140,7 +148,7 @@ const reviewMode = () => {
                 if (tryAgain >= textArray.length / 10) {
                     text.innerHTML = text.innerHTML + '<h3 style="text-align: center; color: var(--darkest);">' + 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!' + '</h3><h4 style="text-align: center; color: var(--dark);">' + "(Click 'Instructions' for some extra tips!)" + '</h4>';
                 } else if (tryAgain) {
-                    text.innerHTML = text.innerHTML + '<h3 style="text-align: center; color: var(--darkest);">' + 'Sooooooo close! Give it another try, I triple-dog dare you!' + '</h3><h4 style="text-align: center; color: var(--dark);">' + "(Click 'Instructions' for some extra tips!)" + '</h4>';
+                    text.innerHTML = text.innerHTML + '<h3 style="text-align: center; color: var(--darkest);">' + 'Sooooooo close! ' + 'Give it another try, ' + 'I triple-dog dare you!' + '</h3><h4 style="text-align: center; color: var(--dark);">' + "(Click 'Instructions' for some extra tips!)" + '</h4>';
                 } else {
                     text.innerHTML = text.innerHTML + '<h3 style="text-align: center; color: var(--darkest);">' + congrats[Math.floor(Math.random() * 13)] + '</h3><h4 style="text-align: center; color: var(--dark);">' + "(Don't forget to practice regularly!)" + '</h4>';
                 }
@@ -175,6 +183,11 @@ const memorizeMode = () => {
 document.querySelector('#review').addEventListener('click', function() {
     if (proofText.text && this.classList.contains('unselected')) {
         reviewMode();
+    } else {
+        document.querySelector('#practiceText').style.color = 'var(--darkest)';
+        setTimeout(function() {
+            document.querySelector('#practiceText').style.color = 'white';
+        }, 500)
     }
 });
 

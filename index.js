@@ -102,6 +102,8 @@ const unselectButton = () => {
 }
 
 
+
+
 const reviewMode = () => {
 
     unselectButton();
@@ -202,6 +204,7 @@ const memorizeMode = () => {
 
 
 document.querySelector('#review').addEventListener('click', function() {
+    
     if (practiceText.innerHTML && this.classList.contains('unselected')) {
         reviewMode();
     } else {

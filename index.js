@@ -102,7 +102,7 @@ const unselectButton = () => {
 }
 
 
-
+let reviewActive = 0;
 
 const reviewMode = () => {
 
@@ -140,6 +140,8 @@ const reviewMode = () => {
             
             let num = textArray[index].search(/[a-z]/i); //This prevents elements starting with punctuation (like quotes) from breaking things
             
+            console.log(result, textArray[index][num].toLowerCase());
+
             if (result === textArray[index][num].toLowerCase()) { //this checks keycode against the first letter of the el in textarray that corresponds with the current blank
                 blankArray[index] = textArray[index]; // this changes the current blank to the corresponding el from textarray
                 nextWord();
@@ -176,17 +178,21 @@ const reviewMode = () => {
                 window.removeEventListener('keyup', keyTest);
             }
         }
+        console.log(failTest);
     }
 
-    //==========================================================================
+    const addInputListener = () => {
+        if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
+            document.querySelector('.mobile').addEventListener('input', keyTest);
+        } else {
+            window.addEventListener('keyup', keyTest);
+        }
+    }
 
-    if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
-        document.querySelector('.mobile').addEventListener('input', keyTest);
-      } else {
-        window.addEventListener('keyup', keyTest);
-      }
-
-    //==========================================================================
+    if (reviewActive === 0) {
+        addInputListener();
+        reviewActive = 1;
+    }
 
     
 }

@@ -118,6 +118,7 @@ const reviewMode = () => {
     let failTest = 0;
     let tryAgain = 0;
     
+    
     practiceText.innerHTML = blankArray.join(' ');
 
     const nextWord = () => {

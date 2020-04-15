@@ -127,71 +127,65 @@ const reviewMode = () => {
         failTest = 0; // this resets the number of mistyped key attempts
     }
 
-    const keyTest = () => {
-        if (document.querySelector('#memorize').classList.contains('unselected')) {
+    const keyTest = (result) => {
+        
+        let num = textArray[index].search(/[a-z]/i); //This prevents elements starting with punctuation (like quotes) from breaking things
+        
+        console.log(result, textArray[index][num].toLowerCase());
 
-            let result;
-            
-            if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
-                result = event.target.value.toLowerCase();
-                document.querySelector('.mobile').value = '';
-              } else {
-                result = event.key.toLowerCase(); // This turns the keycode to lowercase for checks
-              }
-            
-            let num = textArray[index].search(/[a-z]/i); //This prevents elements starting with punctuation (like quotes) from breaking things
-            
-            console.log(result, textArray[index][num].toLowerCase());
-
-            if (result === textArray[index][num].toLowerCase()) { //this checks keycode against the first letter of the el in textarray that corresponds with the current blank
-                blankArray[index] = textArray[index]; // this changes the current blank to the corresponding el from textarray
-                nextWord();
-            } else if (failTest === 2) {
-                blankArray[index] = '<span style="color: var(--darkest);">' + textArray[index] + '</span>';
-                nextWord();
-                tryAgain++;
-            } else {
-                errorShake();
-                failTest++;
-            }
-            
-            if (blankArray.slice(-1)[0][0] !== '_') {
-                const done = document.querySelector('#done');
-                const doneSub = document.querySelector('#doneSub');
-                done.classList.remove('hidden');
-                doneSub.classList.remove('hidden');
-                if (tryAgain >= textArray.length / 10) {
-                    done.innerHTML = 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!';
-                    doneSub.innerHTML = "(Click 'Instructions' for some extra tips!)";
-                } else if (tryAgain) {
-                    done.innerHTML = 'Sooooooo close! <u>Give it another try</u>, I triple-dog dare you!';
-                    done.style.cursor = 'pointer';
-                    done.addEventListener('click', function() {
-                        done.style.cursor = 'auto';
-                        memorizeMode();
-                        reviewMode();
-                    })
-                    doneSub.innerHTML = "(Click 'Instructions' for some extra tips!)";
-                } else {
-                    done.innerHTML = congrats[Math.floor(Math.random() * 13)];
-                    doneSub.innerHTML = "(Don't forget to practice regularly!)";
-                }
-                window.removeEventListener('keyup', keyTest);
-            }
-        }
-        console.log(failTest);
-    }
-
-    const addInputListener = () => {
-        if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
-            document.querySelector('.mobile').addEventListener('input', keyTest);
+        if (result === textArray[index][num].toLowerCase()) { //this checks keycode against the first letter of the el in textarray that corresponds with the current blank
+            blankArray[index] = textArray[index]; // this changes the current blank to the corresponding el from textarray
+            nextWord();
+        } else if (failTest === 2) {
+            blankArray[index] = '<span style="color: var(--darkest);">' + textArray[index] + '</span>';
+            nextWord();
+            tryAgain++;
         } else {
-            window.addEventListener('keyup', keyTest);
+            errorShake();
+            failTest++;
+        }
+        
+        if (blankArray.slice(-1)[0][0] !== '_') {
+            const done = document.querySelector('#done');
+            const doneSub = document.querySelector('#doneSub');
+            done.classList.remove('hidden');
+            doneSub.classList.remove('hidden');
+            if (tryAgain >= textArray.length / 10) {
+                done.innerHTML = 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!';
+                doneSub.innerHTML = "(Click 'Instructions' for some extra tips!)";
+            } else if (tryAgain) {
+                done.innerHTML = 'Sooooooo close! <u>Give it another try</u>, I triple-dog dare you!';
+                done.style.cursor = 'pointer';
+                done.addEventListener('click', function() {
+                    done.style.cursor = 'auto';
+                    memorizeMode();
+                    reviewMode();
+                })
+                doneSub.innerHTML = "(Click 'Instructions' for some extra tips!)";
+            } else {
+                done.innerHTML = congrats[Math.floor(Math.random() * 13)];
+                doneSub.innerHTML = "(Don't forget to practice regularly!)";
+            }
+            window.removeEventListener('keyup', keyTest);
         }
     }
 
     if (reviewActive === 0) {
-        addInputListener();
+        if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
+            document.querySelector('.mobile').addEventListener('input', function() {
+                if (document.querySelector('#memorize').classList.contains('unselected')) {
+                    result = event.target.value.toLowerCase();
+                    keyTest(result);
+                }
+            });
+        } else {
+            window.addEventListener('keyup', function() {
+                if (document.querySelector('#memorize').classList.contains('unselected')) {
+                    result = event.key.toLowerCase();
+                    keyTest(result);
+                }
+            });
+        }
         reviewActive = 1;
     }
 

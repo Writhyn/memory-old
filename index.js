@@ -121,19 +121,20 @@ const reviewMode = () => {
     
     practiceText.innerHTML = blankArray.join(' ');
 
-    const nextWord = () => {
-        practiceText.innerHTML = blankArray.join(' '); // this displays the current blankarray in the practice text
-        index++; // this advances the word being checked to the next blank
-        failTest = 0; // this resets the number of mistyped key attempts
-    }
 
     const keyTest = (result) => {
-        
-        let num = textArray[index].search(/[a-z]/i); //This prevents elements starting with punctuation (like quotes) from breaking things
-        
-        console.log(result, textArray[index][num].toLowerCase());
 
-        if (result === textArray[index][num].toLowerCase()) { //this checks keycode against the first letter of the el in textarray that corresponds with the current blank
+        const nextWord = () => {
+            practiceText.innerHTML = blankArray.join(' '); // this displays the current blankarray in the practice text
+            index++; // this advances the word being checked to the next blank
+            failTest = 0; // this resets the number of mistyped key attempts
+        }
+        
+        let fLetter = textArray[index].search(/[a-z]/i); //This prevents elements starting with punctuation (like quotes) from breaking things
+        
+        console.log(result, textArray[index], index);
+
+        if (result === textArray[index][fLetter].toLowerCase()) { //this checks keycode against the first letter of the el in textarray that corresponds with the current blank
             blankArray[index] = textArray[index]; // this changes the current blank to the corresponding el from textarray
             nextWord();
         } else if (failTest === 2) {
@@ -170,17 +171,18 @@ const reviewMode = () => {
         }
     }
 
-    if (reviewActive === 0) {
+    if (!reviewActive) {
+        const selectTest = () => document.querySelector('#memorize').classList.contains('unselected');
         if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
             document.querySelector('.mobile').addEventListener('input', function() {
-                if (document.querySelector('#memorize').classList.contains('unselected')) {
+                if (selectTest()) {
                     result = event.target.value.toLowerCase();
                     keyTest(result);
                 }
             });
         } else {
             window.addEventListener('keyup', function() {
-                if (document.querySelector('#memorize').classList.contains('unselected')) {
+                if (selectTest()) {
                     result = event.key.toLowerCase();
                     keyTest(result);
                 }

@@ -1,5 +1,7 @@
 const practiceText = document.querySelector('#practiceText');
 
+let mode = 'memorize';
+
 const congrats = [
     "Keep being awesome, and I'll keep saying congratulations.",
     "Your future is looking so bright that I need sunglasses.",
@@ -77,7 +79,7 @@ practiceText.addEventListener('input', function() {
 });
 
 document.querySelector('#instructLink').addEventListener('click', function() {
-    if (document.querySelector('#review').classList.contains('unselected')) {
+    if (mode === 'memorize') {
         document.querySelector('#instructions'  ).classList.toggle('hidden');
     } else {
         document.querySelector('#instructions2').classList.toggle('hidden');
@@ -105,7 +107,7 @@ const unselectButton = () => {
 let reviewActive = 0;
 
 const reviewMode = () => {
-
+    mode === 'review';
     unselectButton();
     proofText.update();
     levelObj.lvlRefresh();
@@ -172,17 +174,16 @@ const reviewMode = () => {
     }
 
     if (!reviewActive) {
-        const selectTest = () => document.querySelector('#memorize').classList.contains('unselected');
         if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
             document.querySelector('.mobile').addEventListener('input', function() {
-                if (selectTest()) {
+                if (mode === 'review') {
                     result = event.target.value.toLowerCase();
                     keyTest(result);
                 }
             });
         } else {
             window.addEventListener('keyup', function() {
-                if (selectTest()) {
+                if (mode === review) {
                     result = event.key.toLowerCase();
                     keyTest(result);
                 }
@@ -195,6 +196,7 @@ const reviewMode = () => {
 }
 
 const memorizeMode = () => {
+    mode = 'memorize';
     document.querySelector('#done').classList.add('hidden');
     document.querySelector('#doneSub').classList.add('hidden');
     unselectButton();
@@ -208,7 +210,7 @@ const memorizeMode = () => {
 
 document.querySelector('#review').addEventListener('click', function() {
     
-    if (practiceText.innerHTML && this.classList.contains('unselected')) {
+    if (practiceText.innerHTML && mode === 'memorize') {
         reviewMode();
     } else {
         errorShake();
@@ -216,7 +218,7 @@ document.querySelector('#review').addEventListener('click', function() {
 });
 
 document.querySelector('#memorize').addEventListener('click', function() {
-    if (this.classList.contains('unselected')) {
+    if (mode === 'review') {
         memorizeMode();
     }
 });

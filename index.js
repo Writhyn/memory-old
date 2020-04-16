@@ -1,22 +1,9 @@
 const practiceText = document.querySelector('#practiceText');
 
 let mode = 'memorize';
+let modeTracker = 0;
 
-const congrats = [
-    "Keep being awesome, and I'll keep saying congratulations.",
-    "Your future is looking so bright that I need sunglasses.",
-    "Your future is no longer uncertain. You have achieved your goals.",
-    "I am successful just by knowing you. I'll congratulate myself, too!",
-    "Please stop giving me so many reasons to be impressed. I'm getting overwhelmed.",
-    "There are only so many ways for me to say congratulations, and I'll use them all!",
-    "I need to congratulate both of us because I knew you'd be successful!",
-    "Sometimes I make a big deal about nothing, but this time I'm not exaggerating. Way to go!",
-    "I'm thinking of a word for you that starts with 'C' and ends in 'ongratulations.'",
-    "You have performed extremely adequately!",
-    "I have so much pride in my heart right now. Is that wrong?",
-    "I love your accomplishments almost as much as I love the person who did them.",
-    "I can't think of any advice I need to give you. You have proven your competence.",
-];
+
 
 const proofText = {
     text: '', // this establishes what will become the master text used when making checks or switching between modes
@@ -25,7 +12,26 @@ const proofText = {
     }
 }
 
-const levelObj = {
+const revMode = {
+    reviewActive: 0,
+    congrats: [
+        "Keep being awesome, and I'll keep saying congratulations.",
+        "Your future is looking so bright that I need sunglasses.",
+        "Your future is no longer uncertain. You have achieved your goals.",
+        "I am successful just by knowing you. I'll congratulate myself, too!",
+        "Please stop giving me so many reasons to be impressed. I'm getting overwhelmed.",
+        "There are only so many ways for me to say congratulations, and I'll use them all!",
+        "I need to congratulate both of us because I knew you'd be successful!",
+        "Sometimes I make a big deal about nothing, but this time I'm not exaggerating. Way to go!",
+        "I'm thinking of a word for you that starts with 'C' and ends in 'ongratulations.'",
+        "You have performed extremely adequately!",
+        "I have so much pride in my heart right now. Is that wrong?",
+        "I love your accomplishments almost as much as I love the person who did them.",
+        "I can't think of any advice I need to give you. You have proven your competence.",
+    ],
+}
+
+const memMode = {
     level: 0,
     lvlUp: function() {
         if (this.level < 6) {
@@ -69,9 +75,9 @@ document.querySelector('#sample').addEventListener('click', function() {
     practiceText.innerText = 'This you know, my beloved brethren, but everyone must be quick to hear, slow to speak, and slow to anger; for the anger of man does not achieve the righteousness of God.';
 })
 
-document.querySelector('#levelUp').addEventListener('click', () => levelObj.lvlUp());
+document.querySelector('#levelUp').addEventListener('click', () => memMode.lvlUp());
 
-document.querySelector('#levelDown').addEventListener('click', () => levelObj.lvlDown());
+document.querySelector('#levelDown').addEventListener('click', () => memMode.lvlDown());
 
 practiceText.addEventListener('input', function() {
     document.querySelector('#sample').classList.add('hidden');
@@ -104,13 +110,13 @@ const unselectButton = () => {
 }
 
 
-let reviewActive = 0;
+
 
 const reviewMode = () => {
-    mode === 'review';
+    mode = 'review';
     unselectButton();
     proofText.update();
-    levelObj.lvlRefresh();
+    memMode.lvlRefresh();
 
     practiceText.contentEditable = 'false';
     let textArray = proofText.text.split(' ');
@@ -125,6 +131,13 @@ const reviewMode = () => {
 
 
     const keyTest = (result) => {
+
+        if (modeTracker === 1) {
+            index = 0;
+            textArray = proofText.text.split(' ');
+            blankArray = proofText.text.replace(/[a-z]/gi, '_').split(' ');
+            modeTracker = 0;
+        }
 
         const nextWord = () => {
             practiceText.innerHTML = blankArray.join(' '); // this displays the current blankarray in the practice text
@@ -166,30 +179,33 @@ const reviewMode = () => {
                 })
                 doneSub.innerHTML = "(Click 'Instructions' for some extra tips!)";
             } else {
-                done.innerHTML = congrats[Math.floor(Math.random() * 13)];
+                done.innerHTML = revMode.congrats[Math.floor(Math.random() * 13)];
                 doneSub.innerHTML = "(Don't forget to practice regularly!)";
             }
             window.removeEventListener('keyup', keyTest);
         }
     }
 
-    if (!reviewActive) {
+    if (revMode.reviewActive === 0) {
+        
         if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
             document.querySelector('.mobile').addEventListener('input', function() {
                 if (mode === 'review') {
                     result = event.target.value.toLowerCase();
                     keyTest(result);
+                    this.value = '';
                 }
             });
         } else {
             window.addEventListener('keyup', function() {
-                if (mode === review) {
+                
+                if (mode === 'review') {
                     result = event.key.toLowerCase();
                     keyTest(result);
                 }
             });
         }
-        reviewActive = 1;
+        revMode.reviewActive = 1;
     }
 
     
@@ -197,6 +213,7 @@ const reviewMode = () => {
 
 const memorizeMode = () => {
     mode = 'memorize';
+    modeTracker = 1;
     document.querySelector('#done').classList.add('hidden');
     document.querySelector('#doneSub').classList.add('hidden');
     unselectButton();

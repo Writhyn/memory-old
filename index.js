@@ -1,9 +1,5 @@
 const practiceText = document.querySelector('#practiceText');
 
-let mode = 'memorize';
-let modeTracker = 0;
-
-
 
 const proofText = {
     text: '', // this establishes what will become the master text used when making checks or switching between modes
@@ -28,7 +24,7 @@ const revMode = {
         "I have so much pride in my heart right now. Is that wrong?",
         "I love your accomplishments almost as much as I love the person who did them.",
         "I can't think of any advice I need to give you. You have proven your competence.",
-    ],
+    ]
 }
 
 const memMode = {
@@ -52,6 +48,120 @@ const memMode = {
     lvlRefresh: function() {
         this.level = 0;
         this.lvlChange();
+    }
+}
+
+const modeActivate = {
+    mode: 'memorize',
+    modeTracker: 0,
+
+    
+    reviewMode: function() {
+        this.mode = 'review';
+        unselectButton();
+        proofText.update();
+        memMode.lvlRefresh();
+
+        practiceText.contentEditable = 'false';
+        let textArray = proofText.text.split(' ');
+        let blankArray = proofText.text.replace(/[a-z]/gi, '_').split(' ');
+
+        let index = 0;
+        let failTest = 0;
+        let tryAgain = 0;
+        
+        
+        practiceText.innerHTML = blankArray.join(' ');
+
+
+        const keyTest = (result) => {
+
+            if (this.modeTracker === 1) {
+                index = 0;
+                textArray = proofText.text.split(' ');
+                blankArray = proofText.text.replace(/[a-z]/gi, '_').split(' ');
+                this.modeTracker = 0;
+            }
+
+            const nextWord = () => {
+                practiceText.innerHTML = blankArray.join(' '); // this displays the current blankarray in the practice text
+                index++; // this advances the word being checked to the next blank
+                failTest = 0; // this resets the number of mistyped key attempts
+            }
+            
+            let fLetter = textArray[index].search(/[a-z]/i); //This prevents elements starting with punctuation (like quotes) from breaking things
+            
+            console.log(result, textArray[index], index);
+
+            if (result === textArray[index][fLetter].toLowerCase()) { //this checks keycode against the first letter of the el in textarray that corresponds with the current blank
+                blankArray[index] = textArray[index]; // this changes the current blank to the corresponding el from textarray
+                nextWord();
+            } else if (failTest === 2) {
+                blankArray[index] = '<span style="color: var(--darkest);">' + textArray[index] + '</span>';
+                nextWord();
+                tryAgain++;
+            } else {
+                errorShake();
+                failTest++;
+            }
+            
+            if (blankArray.slice(-1)[0][0] !== '_') {
+                const done = document.querySelector('#done');
+                const doneSub = document.querySelector('#doneSub');
+                done.classList.remove('hidden');
+                doneSub.classList.remove('hidden');
+                if (tryAgain >= textArray.length / 10) {
+                    done.innerHTML = 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!';
+                    doneSub.innerHTML = "(Click 'Instructions' for some extra tips!)";
+                } else if (tryAgain) {
+                    done.innerHTML = 'Sooooooo close! <u>Give it another try</u>, I triple-dog dare you!';
+                    done.style.cursor = 'pointer';
+                    done.addEventListener('click', function() {
+                        done.style.cursor = 'auto';
+                        modeActivate.memorizeMode();
+                        modeActivate.reviewMode();
+                    })
+                    doneSub.innerHTML = "(Click 'Instructions' for some extra tips!)";
+                } else {
+                    done.innerHTML = revMode.congrats[Math.floor(Math.random() * 13)];
+                    doneSub.innerHTML = "(Don't forget to practice regularly!)";
+                }
+                window.removeEventListener('keyup', keyTest);
+            }
+
+        }
+
+        if (revMode.reviewActive === 0) {
+        
+            if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
+                document.querySelector('.mobile').addEventListener('input', function() {
+                    if (modeActivate.mode === 'review') {
+                        result = event.target.value.toLowerCase();
+                        keyTest(result);
+                        this.value = '';
+                    }
+                });
+            } else {
+                window.addEventListener('keyup', function() {
+                    
+                    if (modeActivate.mode === 'review') {
+                        result = event.key.toLowerCase();
+                        keyTest(result);
+                    }
+                });
+            }
+            revMode.reviewActive = 1;
+        }
+    },
+    memorizeMode: function() {
+        this.mode = 'memorize';
+        this.modeTracker = 1;
+        document.querySelector('#done').classList.add('hidden');
+        document.querySelector('#doneSub').classList.add('hidden');
+        unselectButton();
+
+        practiceText.contentEditable = 'true';
+        practiceText.innerHTML = proofText.text;
     }
 }
 
@@ -85,7 +195,7 @@ practiceText.addEventListener('input', function() {
 });
 
 document.querySelector('#instructLink').addEventListener('click', function() {
-    if (mode === 'memorize') {
+    if (modeActivate.mode === 'memorize') {
         document.querySelector('#instructions'  ).classList.toggle('hidden');
     } else {
         document.querySelector('#instructions2').classList.toggle('hidden');
@@ -109,134 +219,18 @@ const unselectButton = () => {
     document.querySelector('.mobile').classList.toggle('hidden');
 }
 
-
-
-
-const reviewMode = () => {
-    mode = 'review';
-    unselectButton();
-    proofText.update();
-    memMode.lvlRefresh();
-
-    practiceText.contentEditable = 'false';
-    let textArray = proofText.text.split(' ');
-    let blankArray = proofText.text.replace(/[a-z]/gi, '_').split(' ');
-
-    let index = 0;
-    let failTest = 0;
-    let tryAgain = 0;
-    
-    
-    practiceText.innerHTML = blankArray.join(' ');
-
-
-    const keyTest = (result) => {
-
-        if (modeTracker === 1) {
-            index = 0;
-            textArray = proofText.text.split(' ');
-            blankArray = proofText.text.replace(/[a-z]/gi, '_').split(' ');
-            modeTracker = 0;
-        }
-
-        const nextWord = () => {
-            practiceText.innerHTML = blankArray.join(' '); // this displays the current blankarray in the practice text
-            index++; // this advances the word being checked to the next blank
-            failTest = 0; // this resets the number of mistyped key attempts
-        }
-        
-        let fLetter = textArray[index].search(/[a-z]/i); //This prevents elements starting with punctuation (like quotes) from breaking things
-        
-        console.log(result, textArray[index], index);
-
-        if (result === textArray[index][fLetter].toLowerCase()) { //this checks keycode against the first letter of the el in textarray that corresponds with the current blank
-            blankArray[index] = textArray[index]; // this changes the current blank to the corresponding el from textarray
-            nextWord();
-        } else if (failTest === 2) {
-            blankArray[index] = '<span style="color: var(--darkest);">' + textArray[index] + '</span>';
-            nextWord();
-            tryAgain++;
-        } else {
-            errorShake();
-            failTest++;
-        }
-        
-        if (blankArray.slice(-1)[0][0] !== '_') {
-            const done = document.querySelector('#done');
-            const doneSub = document.querySelector('#doneSub');
-            done.classList.remove('hidden');
-            doneSub.classList.remove('hidden');
-            if (tryAgain >= textArray.length / 10) {
-                done.innerHTML = 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!';
-                doneSub.innerHTML = "(Click 'Instructions' for some extra tips!)";
-            } else if (tryAgain) {
-                done.innerHTML = 'Sooooooo close! <u>Give it another try</u>, I triple-dog dare you!';
-                done.style.cursor = 'pointer';
-                done.addEventListener('click', function() {
-                    done.style.cursor = 'auto';
-                    memorizeMode();
-                    reviewMode();
-                })
-                doneSub.innerHTML = "(Click 'Instructions' for some extra tips!)";
-            } else {
-                done.innerHTML = revMode.congrats[Math.floor(Math.random() * 13)];
-                doneSub.innerHTML = "(Don't forget to practice regularly!)";
-            }
-            window.removeEventListener('keyup', keyTest);
-        }
-    }
-
-    if (revMode.reviewActive === 0) {
-        
-        if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
-            document.querySelector('.mobile').addEventListener('input', function() {
-                if (mode === 'review') {
-                    result = event.target.value.toLowerCase();
-                    keyTest(result);
-                    this.value = '';
-                }
-            });
-        } else {
-            window.addEventListener('keyup', function() {
-                
-                if (mode === 'review') {
-                    result = event.key.toLowerCase();
-                    keyTest(result);
-                }
-            });
-        }
-        revMode.reviewActive = 1;
-    }
-
-    
-}
-
-const memorizeMode = () => {
-    mode = 'memorize';
-    modeTracker = 1;
-    document.querySelector('#done').classList.add('hidden');
-    document.querySelector('#doneSub').classList.add('hidden');
-    unselectButton();
-
-    practiceText.contentEditable = 'true';
-    practiceText.innerHTML = proofText.text;
-    
-}
-
-
-
 document.querySelector('#review').addEventListener('click', function() {
     
-    if (practiceText.innerHTML && mode === 'memorize') {
-        reviewMode();
+    if (practiceText.innerHTML && modeActivate.mode === 'memorize') {
+        modeActivate.reviewMode();
     } else {
         errorShake();
     }
 });
 
 document.querySelector('#memorize').addEventListener('click', function() {
-    if (mode === 'review') {
-        memorizeMode();
+    if (modeActivate.mode === 'review') {
+        modeActivate.memorizeMode();
     }
 });
 

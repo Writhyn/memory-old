@@ -53,12 +53,19 @@ const memMode = {
 
 const modeActivate = {
     mode: 'memorize',
-    modeTracker: 0,
 
-    
+    unselectButton: function() {
+        document.querySelector('#memorize').classList.toggle('unselected');
+        document.querySelector('#review').classList.toggle('unselected');
+        document.querySelector('#instructions').classList.add('hidden');
+        document.querySelector('#instructions2').classList.add('hidden');
+        document.querySelector('#advance').classList.toggle('invisible');
+        document.querySelector('.mobile').classList.toggle('hidden');
+    },
+
     reviewMode: function() {
         this.mode = 'review';
-        unselectButton();
+        this.unselectButton();
         proofText.update();
         memMode.lvlRefresh();
 
@@ -76,24 +83,13 @@ const modeActivate = {
 
         const keyTest = (result) => {
 
-            if (this.modeTracker === 1) {
-                index = 0;
-                textArray = proofText.text.split(' ');
-                blankArray = proofText.text.replace(/[a-z]/gi, '_').split(' ');
-                this.modeTracker = 0;
-            }
-
             const nextWord = () => {
                 practiceText.innerHTML = blankArray.join(' '); // this displays the current blankarray in the practice text
                 index++; // this advances the word being checked to the next blank
                 failTest = 0; // this resets the number of mistyped key attempts
             }
-            
-            let fLetter = textArray[index].search(/[a-z]/i); //This prevents elements starting with punctuation (like quotes) from breaking things
-            
-            console.log(result, textArray[index], index);
 
-            if (result === textArray[index][fLetter].toLowerCase()) { //this checks keycode against the first letter of the el in textarray that corresponds with the current blank
+            if (result === textArray[index].match(/[a-z]/i)[0].toLowerCase()) { //this checks keycode against the first letter of the el in textarray that corresponds with the current blank
                 blankArray[index] = textArray[index]; // this changes the current blank to the corresponding el from textarray
                 nextWord();
             } else if (failTest === 2) {
@@ -131,34 +127,42 @@ const modeActivate = {
 
         }
 
-        if (revMode.reviewActive === 0) {
-        
-            if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
-                document.querySelector('.mobile').addEventListener('input', function() {
-                    if (modeActivate.mode === 'review') {
-                        result = event.target.value.toLowerCase();
-                        keyTest(result);
-                        this.value = '';
-                    }
-                });
-            } else {
-                window.addEventListener('keyup', function() {
-                    
-                    if (modeActivate.mode === 'review') {
-                        result = event.key.toLowerCase();
-                        keyTest(result);
-                    }
-                });
-            }
-            revMode.reviewActive = 1;
+        const addInputListener = () => {
+            
+                result = event.target.value.toLowerCase();
+                keyTest(result);
+                this.value = '';
+            
         }
+
+        const addKeyListener = () => {
+            
+                result = event.key.toLowerCase();
+                keyTest(result);
+            
+        }
+        
+        if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
+            document.querySelector('.mobile').addEventListener('input', addInputListener);
+        } else {
+            window.addEventListener('keyup', addKeyListener);
+        }
+
+        document.querySelector('#memorize').addEventListener('click', function() {
+            console.log('deleted');
+            document.querySelector('.mobile').removeEventListener('input', addInputListener);
+            window.removeEventListener('keyup', addKeyListener);
+        });
+
+        
+           
+        
     },
     memorizeMode: function() {
         this.mode = 'memorize';
-        this.modeTracker = 1;
         document.querySelector('#done').classList.add('hidden');
         document.querySelector('#doneSub').classList.add('hidden');
-        unselectButton();
+        this.unselectButton();
 
         practiceText.contentEditable = 'true';
         practiceText.innerHTML = proofText.text;
@@ -207,16 +211,6 @@ const errorShake = () => {
     setTimeout(function() {
         document.querySelector('#shake').classList.remove('shake-horizontal');
     }, 500);
-}
-
-
-const unselectButton = () => {
-    document.querySelector('#memorize').classList.toggle('unselected');
-    document.querySelector('#review').classList.toggle('unselected');
-    document.querySelector('#instructions').classList.add('hidden');
-    document.querySelector('#instructions2').classList.add('hidden');
-    document.querySelector('#advance').classList.toggle('invisible');
-    document.querySelector('.mobile').classList.toggle('hidden');
 }
 
 document.querySelector('#review').addEventListener('click', function() {

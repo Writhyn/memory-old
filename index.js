@@ -106,7 +106,7 @@ const modeActivate = {
                 const doneSub = document.querySelector('#doneSub');
                 done.classList.remove('hidden');
                 doneSub.classList.remove('hidden');
-                if (tryAgain >= textArray.length / 10) {
+                if (tryAgain >= textArray.length / 2) {
                     done.innerHTML = 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!';
                     doneSub.innerHTML = "(Click 'Instructions' for some extra tips!)";
                 } else if (tryAgain) {
@@ -128,28 +128,25 @@ const modeActivate = {
         }
 
         const addInputListener = () => {
-            
                 result = event.target.value.toLowerCase();
                 keyTest(result);
                 this.value = '';
-            
         }
 
         const addKeyListener = () => {
-            
                 result = event.key.toLowerCase();
                 keyTest(result);
-            
         }
         
         if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
             document.querySelector('.mobile').addEventListener('input', addInputListener);
         } else {
+            window.removeEventListener('keyup', addKeyListener);
             window.addEventListener('keyup', addKeyListener);
         }
 
         document.querySelector('#memorize').addEventListener('click', function() {
-            console.log('deleted');
+            
             document.querySelector('.mobile').removeEventListener('input', addInputListener);
             window.removeEventListener('keyup', addKeyListener);
         });

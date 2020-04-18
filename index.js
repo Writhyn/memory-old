@@ -9,7 +9,6 @@ const proofText = {
 }
 
 const revMode = {
-    reviewActive: 0,
     congrats: [
         "Keep being awesome, and I'll keep saying congratulations.",
         "Your future is looking so bright that I need sunglasses.",
@@ -106,7 +105,7 @@ const modeActivate = {
                 const doneSub = document.querySelector('#doneSub');
                 done.classList.remove('hidden');
                 doneSub.classList.remove('hidden');
-                if (tryAgain >= textArray.length / 2) {
+                if (tryAgain >= textArray.length / 10) {
                     done.innerHTML = 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!';
                     doneSub.innerHTML = "(Click 'Instructions' for some extra tips!)";
                 } else if (tryAgain) {
@@ -126,33 +125,19 @@ const modeActivate = {
             }
 
         }
-
-        const addInputListener = () => {
+        
+        if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
+            document.querySelector('.mobile').onclick = function() {
                 result = event.target.value.toLowerCase();
                 keyTest(result);
                 this.value = '';
-        }
-
-        const addKeyListener = () => {
+            };
+        } else {
+            window.onkeyup = function() {
                 result = event.key.toLowerCase();
                 keyTest(result);
+            };
         }
-        
-        if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
-            document.querySelector('.mobile').addEventListener('input', addInputListener);
-        } else {
-            window.removeEventListener('keyup', addKeyListener);
-            window.addEventListener('keyup', addKeyListener);
-        }
-
-        document.querySelector('#memorize').addEventListener('click', function() {
-            
-            document.querySelector('.mobile').removeEventListener('input', addInputListener);
-            window.removeEventListener('keyup', addKeyListener);
-        });
-
-        
-           
         
     },
     memorizeMode: function() {
@@ -163,6 +148,7 @@ const modeActivate = {
 
         practiceText.contentEditable = 'true';
         practiceText.innerHTML = proofText.text;
+        window.onkeyup = null;
     }
 }
 
@@ -180,27 +166,9 @@ practiceText.addEventListener("paste", function(e) {
 
 });
 
-document.querySelector('#sample').addEventListener('click', function() {
-    this.classList.add('hidden');
-    document.querySelector('#shake').style.flexFlow = 'column nowrap';
-    practiceText.innerText = 'This you know, my beloved brethren, but everyone must be quick to hear, slow to speak, and slow to anger; for the anger of man does not achieve the righteousness of God.';
-})
-
-document.querySelector('#levelUp').addEventListener('click', () => memMode.lvlUp());
-
-document.querySelector('#levelDown').addEventListener('click', () => memMode.lvlDown());
-
 practiceText.addEventListener('input', function() {
     document.querySelector('#sample').classList.add('hidden');
     document.querySelector('#shake').style.flexFlow = 'column nowrap';
-});
-
-document.querySelector('#instructLink').addEventListener('click', function() {
-    if (modeActivate.mode === 'memorize') {
-        document.querySelector('#instructions'  ).classList.toggle('hidden');
-    } else {
-        document.querySelector('#instructions2').classList.toggle('hidden');
-    }
 });
 
 const errorShake = () => {
@@ -210,19 +178,33 @@ const errorShake = () => {
     }, 500);
 }
 
-document.querySelector('#review').addEventListener('click', function() {
-    
-    if (practiceText.innerHTML && modeActivate.mode === 'memorize') {
-        modeActivate.reviewMode();
-    } else {
-        errorShake();
+document.querySelector('#machine').addEventListener('click', function(event) {
+    switch (event.target.id) {
+        case 'sample':
+            document.querySelector('#sample').classList.add('hidden');
+            document.querySelector('#shake').style.flexFlow = 'column nowrap';
+            practiceText.innerText = 'This you know, my beloved brethren, but everyone must be quick to hear, slow to speak, and slow to anger; for the anger of man does not achieve the righteousness of God.';
+        case 'levelDown':
+            memMode.lvlDown();
+            break;
+        case 'levelUp':
+            memMode.lvlUp();
+            break;
+        case 'memorize':
+            if (modeActivate.mode === 'review') {
+                modeActivate.memorizeMode();
+            }
+            break;
+        case 'review':
+            practiceText.innerHTML && modeActivate.mode === 'memorize' ?
+                modeActivate.reviewMode() :
+                errorShake();
+            break;
+        case 'underLink':
+            modeActivate.mode === 'memorize' ? 
+                document.querySelector('#instructions').classList.toggle('hidden') :
+                document.querySelector('#instructions2').classList.toggle('hidden');
     }
-});
-
-document.querySelector('#memorize').addEventListener('click', function() {
-    if (modeActivate.mode === 'review') {
-        modeActivate.memorizeMode();
-    }
-});
+})
 
 

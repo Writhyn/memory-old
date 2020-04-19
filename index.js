@@ -123,7 +123,7 @@ const revMode = {
                     qS('#doneSub').innerHTML = "(Click 'Instructions' for some extra tips!)";
                 } else {
                     qS('#done').innerHTML = revMode.congrats[Math.floor(Math.random() * 13)];
-                    qS('#doneSub').innerHTML = "(Don't forget to practice regularly!)";
+                    qS('#doneSub').innerHTML = "(Don't forget to practice reciting out loud regularly!)";
                 }
             }
 

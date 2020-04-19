@@ -1,6 +1,5 @@
 const practiceText = document.querySelector('#practiceText');
 
-
 const proofText = {
     text: '', // this establishes what will become the master text used when making checks or switching between modes
     update: function() {
@@ -23,48 +22,9 @@ const revMode = {
         "I have so much pride in my heart right now. Is that wrong?",
         "I love your accomplishments almost as much as I love the person who did them.",
         "I can't think of any advice I need to give you. You have proven your competence.",
-    ]
-}
-
-const memMode = {
-    level: 0,
-    lvlUp: function() {
-        if (this.level < 6) {
-            this.level++;
-            this.lvlChange();
-        }
-    },
-    lvlDown: function() {
-        if (this.level > 0) {
-            this.level--;
-            this.lvlChange();
-        }
-    },
-    lvlChange: function() {
-        document.querySelector('#level').innerHTML = 'Level ' + this.level;
-        practiceText.style.webkitAnimationName = 'blink' + this.level;
-    },
-    lvlRefresh: function() {
-        this.level = 0;
-        this.lvlChange();
-    }
-}
-
-const modeActivate = {
-    mode: 'memorize',
-
-    unselectButton: function() {
-        document.querySelector('#memorize').classList.toggle('unselected');
-        document.querySelector('#review').classList.toggle('unselected');
-        document.querySelector('#instructions').classList.add('hidden');
-        document.querySelector('#instructions2').classList.add('hidden');
-        document.querySelector('#advance').classList.toggle('invisible');
-        document.querySelector('.mobile').classList.toggle('hidden');
-    },
-
+    ],
     reviewMode: function() {
-        this.mode = 'review';
-        this.unselectButton();
+        modeActivate.unselectButton();
         proofText.update();
         memMode.lvlRefresh();
 
@@ -114,7 +74,7 @@ const modeActivate = {
                     done.addEventListener('click', function() {
                         done.style.cursor = 'auto';
                         modeActivate.memorizeMode();
-                        modeActivate.reviewMode();
+                        revMode.reviewMode();
                     })
                     doneSub.innerHTML = "(Click 'Instructions' for some extra tips!)";
                 } else {
@@ -140,15 +100,49 @@ const modeActivate = {
         }
         
     },
+}
+
+const memMode = {
+    level: 0,
+    lvlUp: function() {
+        if (this.level < 6) {
+            this.level++;
+            this.lvlChange();
+        }
+    },
+    lvlDown: function() {
+        if (this.level > 0) {
+            this.level--;
+            this.lvlChange();
+        }
+    },
+    lvlChange: function() {
+        document.querySelector('#level').innerHTML = 'Level ' + this.level;
+        practiceText.style.webkitAnimationName = 'blink' + this.level;
+    },
+    lvlRefresh: function() {
+        this.level = 0;
+        this.lvlChange();
+    },
     memorizeMode: function() {
-        this.mode = 'memorize';
         document.querySelector('#done').classList.add('hidden');
         document.querySelector('#doneSub').classList.add('hidden');
-        this.unselectButton();
+        modeActivate.unselectButton();
 
         practiceText.contentEditable = 'true';
         practiceText.innerHTML = proofText.text;
         window.onkeyup = null;
+    }
+}
+
+const modeActivate = {
+    unselectButton: function() {
+        document.querySelector('#memorize').classList.toggle('unselected');
+        document.querySelector('#review').classList.toggle('unselected');
+        document.querySelector('#instructions').classList.add('hidden');
+        document.querySelector('#instructions2').classList.add('hidden');
+        document.querySelector('#advance').classList.toggle('invisible');
+        document.querySelector('.mobile').classList.toggle('hidden');
     }
 }
 
@@ -175,10 +169,11 @@ const errorShake = () => {
     document.querySelector('#shake').classList.add('shake-horizontal');
     setTimeout(function() {
         document.querySelector('#shake').classList.remove('shake-horizontal');
-    }, 500);
+    }, 300);
 }
 
 document.querySelector('#machine').addEventListener('click', function(event) {
+    const select = document.querySelector('#review');
     switch (event.target.id) {
         case 'sample':
             document.querySelector('#sample').classList.add('hidden');
@@ -191,17 +186,17 @@ document.querySelector('#machine').addEventListener('click', function(event) {
             memMode.lvlUp();
             break;
         case 'memorize':
-            if (modeActivate.mode === 'review') {
-                modeActivate.memorizeMode();
+            if (!select.classList.contains('unselected')) {
+                memMode.memorizeMode();
             }
             break;
         case 'review':
-            practiceText.innerHTML && modeActivate.mode === 'memorize' ?
-                modeActivate.reviewMode() :
+            practiceText.innerHTML && select.classList.contains('unselected') ?
+                revMode.reviewMode() :
                 errorShake();
             break;
         case 'underLink':
-            modeActivate.mode === 'memorize' ? 
+            select.classList.contains('unselected') ? 
                 document.querySelector('#instructions').classList.toggle('hidden') :
                 document.querySelector('#instructions2').classList.toggle('hidden');
     }

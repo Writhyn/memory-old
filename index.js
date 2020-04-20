@@ -110,7 +110,7 @@ const revMode = {
             if (blankArray.slice(-1)[0][0] !== '_') {
                 qS('.mobile').classList.add('hidden');
                 qS('#doneMessage').classList.remove('hidden');
-                if (failNum >= textArray.length / 2) {
+                if (failNum >= textArray.length / 10) {
                     qS('#done').innerHTML = 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!';
                     qS('#doneSub').innerHTML = "(Click 'Instructions' for some extra tips!)";
                 } else if (failNum) {

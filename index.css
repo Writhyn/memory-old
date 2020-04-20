@@ -123,13 +123,15 @@ h1 {
             100% {opacity: 0;}
         }
 
-        #done {
+        #doneMessage {
             text-align: center;
+        }
+
+        #done {
             color: var(--darkest);
         }
 
         #doneSub {
-            text-align: center;
             color: var(--dark)
         }
 

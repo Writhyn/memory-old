@@ -1,9 +1,9 @@
 const qS = document.querySelector.bind(document);
 
 const proofText = {
-    text: '', // this establishes what will become the master text used when making checks or switching between modes
+    text: '',
     update: function() {
-        return this.text = qS('#practiceText').innerHTML; // this makes prooftext current with whatever is in the practice text
+        return this.text = qS('#practiceText').innerHTML;
     }
 }
 
@@ -37,8 +37,7 @@ const memMode = {
         qS('#advance').classList.remove('invisible');
         qS('.mobile').classList.add('hidden');
 
-        qS('#done').classList.add('hidden');
-        qS('#doneSub').classList.add('hidden');
+        qS('#doneMessage').classList.add('hidden');
 
         qS('#practiceText').contentEditable = 'true';
         qS('#practiceText').innerHTML = proofText.text;
@@ -87,28 +86,25 @@ const revMode = {
 
         const keyTest = (result) => {
 
-            const nextWord = () => {
-                qS('#practiceText').innerHTML = blankArray.join(' '); // this displays the current blankarray in the practice text
-                index++; // this advances the word being checked to the next blank
-                failTest = 0; // this resets the number of mistyped key attempts
-            }
-
-            if (result === textArray[index].match(/[a-z0-9]/i)[0].toLowerCase()) { //this checks keycode against the first letter of the el in textarray that corresponds with the current blank
-                blankArray[index] = textArray[index]; // this changes the current blank to the corresponding el from textarray
-                nextWord();
+            if (result === textArray[index].match(/[a-z0-9]/i)[0].toLowerCase()) {
+                blankArray[index] = textArray[index];
+                index++;
+                failTest = 0;
             } else if (failTest === 2) {
                 blankArray[index] = '<span style="color: var(--darkest);">' + textArray[index] + '</span>';
-                nextWord();
+                index++;
+                failTest = 0;
                 tryAgain++;
             } else {
                 errorShake();
                 failTest++;
             }
+
+            qS('#practiceText').innerHTML = blankArray.join(' ');
             
             if (blankArray.slice(-1)[0][0] !== '_') {
                 qS('.mobile').classList.add('hidden');
-                qS('#done').classList.remove('hidden');
-                qS('#doneSub').classList.remove('hidden');
+                qS('#doneMessage').classList.remove('hidden');
                 if (tryAgain >= textArray.length / 10) {
                     qS('#done').innerHTML = 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!';
                     qS('#doneSub').innerHTML = "(Click 'Instructions' for some extra tips!)";
@@ -117,12 +113,12 @@ const revMode = {
                     qS('#done').style.cursor = 'pointer';
                     qS('#done').addEventListener('click', function() {
                         qS('#done').style.cursor = 'auto';
-                        modeActivate.memorizeMode();
+                        memMode.memorizeMode();
                         revMode.reviewMode();
                     })
                     qS('#doneSub').innerHTML = "(Click 'Instructions' for some extra tips!)";
                 } else {
-                    qS('#done').innerHTML = revMode.congrats[Math.floor(Math.random() * 13)];
+                    qS('#done').innerHTML = revMode.congrats[Math.floor(Math.random() * this.congrats.length)];
                     qS('#doneSub').innerHTML = "(Don't forget to practice reciting out loud regularly!)";
                 }
             }
@@ -184,7 +180,7 @@ qS('#machine').addEventListener('click', function(event) {
             memMode.lvlUp();
             break;
         case 'memorize':
-            if (!qS('#review').classList.contains('unselected')) {
+            if (qS('#memorize').classList.contains('unselected')) {
                 memMode.memorizeMode();
             }
             break;

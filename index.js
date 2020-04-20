@@ -66,6 +66,13 @@ const revMode = {
         "I love your accomplishments almost as much as I love the person who did them.",
         "I can't think of any advice I need to give you. You have proven your competence.",
     ],
+    fin: {
+        fail: 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!',
+        close: 'Sooooooo close!<div id="tryAgain" class="myButtons">Give it another try!</div>I triple-dog dare you!',
+        tips: "(Click 'Instructions' for some extra tips!)",
+        practice: "(Don't forget to practice reciting out loud regularly!)",
+        success: function() {return revMode.congrats[Math.floor(Math.random() * revMode.congrats.length)]}
+    },
     reviewMode: function() {
         qS('#memorize').classList.add('unselected');
         qS('#review').classList.remove('unselected');
@@ -110,23 +117,18 @@ const revMode = {
             if (blankArray.slice(-1)[0][0] !== '_') {
                 qS('.mobile').classList.add('hidden');
                 qS('#doneMessage').classList.remove('hidden');
-                if (failNum >= textArray.length / 10) {
-                    qS('#done').innerHTML = 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!';
-                    qS('#doneSub').innerHTML = "(Click 'Instructions' for some extra tips!)";
-                } else if (failNum) {
-                    qS('#done').innerHTML = 'Sooooooo close!<div id="tryAgain" class="myButtons">Give it another try!</div>I triple-dog dare you!';
-                    qS('#doneSub').innerHTML = "(Click 'Instructions' for some extra tips!)";
+                if (failNum) {
+                    failNum >= textArray.length / 10 ? qS('#done').innerHTML = this.fin.fail : qS('#done').innerHTML = this.fin.close;
+                    qS('#doneSub').innerHTML = this.fin.tips;
                 } else {
-                    qS('#done').innerHTML = revMode.congrats[Math.floor(Math.random() * this.congrats.length)];
-                    qS('#doneSub').innerHTML = "(Don't forget to practice reciting out loud regularly!)";
+                    qS('#done').innerHTML = this.fin.success();
+                    qS('#doneSub').innerHTML = this.fin.practice;
                 }
             }
-
         }
         
         if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
             qS('.mobile').oninput = (event) => {
-
                 result = event.target.value.toLowerCase();
                 keyTest(result);
                 this.value = '';
@@ -137,20 +139,16 @@ const revMode = {
                 keyTest(result);
             };
         }
-        
     },
 }
 
 qS('#practiceText').addEventListener("paste", e => {
     // cancel paste
     e.preventDefault();
-
     // get text representation of clipboard
     var text = (e.originalEvent || e).clipboardData.getData('text/plain');
-
     // insert text manually
-    document.execCommand("insertHTML", false, text);
-
+    qS('#practiceText').innerHTML = text;
 });
 
 qS('#practiceText').addEventListener('input', () => {

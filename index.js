@@ -1,10 +1,8 @@
 const qS = document.querySelector.bind(document);
 
-const errorShake = () => {
-    qS('#shake').classList.add('shake-horizontal');
-    setTimeout(function() {
-        qS('#shake').classList.remove('shake-horizontal');
-    }, 300);
+const errorShake = (el) => {
+    qS(el).classList.add('shake-horizontal');
+    setTimeout(() => qS(el).classList.remove('shake-horizontal'), 300);
 }
 
 const proofText = {
@@ -30,7 +28,7 @@ const memMode = {
     },
     lvlChange: function() {
         qS('#level').innerHTML = 'Level ' + this.level;
-     qS('#practiceText').style.webkitAnimationName = 'blink' + this.level;
+        qS('#practiceText').style.webkitAnimationName = 'blink' + this.level;
     },
     lvlRefresh: function() {
         this.level = 0;
@@ -85,7 +83,7 @@ const revMode = {
 
         let index = 0;
         let failTest = 0;
-        let tryAgain = 0;
+        let failNum = 0;
         
         
         qS('#practiceText').innerHTML = blankArray.join(' ');
@@ -101,9 +99,9 @@ const revMode = {
                 blankArray[index] = '<span style="color: var(--darkest);">' + textArray[index] + '</span>';
                 index++;
                 failTest = 0;
-                tryAgain++;
+                failNum++;
             } else {
-                errorShake();
+                errorShake('#shake');
                 failTest++;
             }
 
@@ -112,17 +110,11 @@ const revMode = {
             if (blankArray.slice(-1)[0][0] !== '_') {
                 qS('.mobile').classList.add('hidden');
                 qS('#doneMessage').classList.remove('hidden');
-                if (tryAgain >= textArray.length / 10) {
+                if (failNum >= textArray.length / 2) {
                     qS('#done').innerHTML = 'Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!';
                     qS('#doneSub').innerHTML = "(Click 'Instructions' for some extra tips!)";
-                } else if (tryAgain) {
-                    qS('#done').innerHTML = 'Sooooooo close! <u>Give it another try</u>, I triple-dog dare you!';
-                    qS('#done').style.cursor = 'pointer';
-                    qS('#done').addEventListener('click', function() {
-                        qS('#done').style.cursor = 'auto';
-                        memMode.memorizeMode();
-                        revMode.reviewMode();
-                    })
+                } else if (failNum) {
+                    qS('#done').innerHTML = 'Sooooooo close!<div id="tryAgain" class="myButtons">Give it another try!</div>I triple-dog dare you!';
                     qS('#doneSub').innerHTML = "(Click 'Instructions' for some extra tips!)";
                 } else {
                     qS('#done').innerHTML = revMode.congrats[Math.floor(Math.random() * this.congrats.length)];
@@ -133,13 +125,14 @@ const revMode = {
         }
         
         if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
-            qS('.mobile').oninput = function() {
+            qS('.mobile').oninput = (event) => {
+
                 result = event.target.value.toLowerCase();
                 keyTest(result);
                 this.value = '';
             };
         } else {
-            window.onkeyup = function() {
+            window.onkeyup = (event) => {
                 result = event.key.toLowerCase();
                 keyTest(result);
             };
@@ -148,7 +141,7 @@ const revMode = {
     },
 }
 
-qS('#practiceText').addEventListener("paste", function(e) {
+qS('#practiceText').addEventListener("paste", e => {
     // cancel paste
     e.preventDefault();
 
@@ -160,12 +153,12 @@ qS('#practiceText').addEventListener("paste", function(e) {
 
 });
 
-qS('#practiceText').addEventListener('input', function() {
+qS('#practiceText').addEventListener('input', () => {
     qS('#sample').classList.add('hidden');
     qS('#shake').style.flexFlow = 'column nowrap';
 });
 
-qS('#machine').addEventListener('click', function(event) {
+qS('#machine').addEventListener('click', event => {
     switch (event.target.id) {
         case 'sample':
             qS('#sample').classList.add('hidden');
@@ -185,7 +178,11 @@ qS('#machine').addEventListener('click', function(event) {
         case 'review':
             qS('#practiceText').innerHTML && qS('#review').classList.contains('unselected') ?
                 revMode.reviewMode() :
-                errorShake();
+                errorShake('#shake');
+            break;
+        case 'tryAgain':
+            memMode.memorizeMode();
+            revMode.reviewMode();
             break;
         case 'underLink':
             qS('#review').classList.contains('unselected') ? 

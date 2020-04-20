@@ -1,5 +1,12 @@
 const qS = document.querySelector.bind(document);
 
+const errorShake = () => {
+    qS('#shake').classList.add('shake-horizontal');
+    setTimeout(function() {
+        qS('#shake').classList.remove('shake-horizontal');
+    }, 300);
+}
+
 const proofText = {
     text: '',
     update: function() {
@@ -151,21 +158,12 @@ qS('#practiceText').addEventListener("paste", function(e) {
     // insert text manually
     document.execCommand("insertHTML", false, text);
 
-    qS('#controls').classList.remove('invisible');
-
 });
 
 qS('#practiceText').addEventListener('input', function() {
     qS('#sample').classList.add('hidden');
     qS('#shake').style.flexFlow = 'column nowrap';
 });
-
-const errorShake = () => {
-    qS('#shake').classList.add('shake-horizontal');
-    setTimeout(function() {
-        qS('#shake').classList.remove('shake-horizontal');
-    }, 300);
-}
 
 qS('#machine').addEventListener('click', function(event) {
     switch (event.target.id) {

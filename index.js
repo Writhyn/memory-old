@@ -131,7 +131,7 @@ const revMode = {
             qS('.mobile').oninput = (event) => {
                 result = event.target.value.toLowerCase();
                 keyTest(result);
-                this.value = '';
+                qS('.mobile').value = '';
             };
         } else {
             window.onkeyup = (event) => {

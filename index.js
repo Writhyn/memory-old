@@ -85,8 +85,7 @@ const revMode = {
         qS('#practiceText').contentEditable = 'false';
         let blankArray = proofText.text.map(el => {
             return el.replace(/[a-z0-9]/gi, '_');
-        })
-        console.log(blankArray);
+        });
 
         let index = 0;
         let failTest = 0;

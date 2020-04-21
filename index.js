@@ -6,9 +6,9 @@ const errorShake = (el) => {
 }
 
 const proofText = {
-    text: [],
+    text: '',
     update: function() {
-        return this.text = qS('#practiceText').innerText.split(/\s/g);
+        return this.text = qS('#practiceText').innerText;
     }
 }
 
@@ -43,7 +43,7 @@ const memMode = {
         qS('.mobile').classList.add('hidden');
 
         qS('#practiceText').contentEditable = 'true';
-        qS('#practiceText').innerHTML = proofText.text.join(' ');
+        qS('#practiceText').innerHTML = proofText.text;
         window.onkeyup = null;
     }
 }
@@ -83,9 +83,8 @@ const revMode = {
         memMode.lvlRefresh();
 
         qS('#practiceText').contentEditable = 'false';
-        let blankArray = proofText.text.map(el => {
-            return el.replace(/[a-z0-9]/gi, '_');
-        });
+        let textArray = proofText.text.split(' ');
+        let blankArray = proofText.text.replace(/[a-z0-9]/gi, '_').split(' ');
 
         let index = 0;
         let failTest = 0;
@@ -97,12 +96,12 @@ const revMode = {
 
         const keyTest = (result) => {
 
-            if (result === proofText.text[index].match(/[a-z0-9]/i)[0].toLowerCase()) {
-                blankArray[index] = proofText.text[index];
+            if (result === textArray[index].match(/[a-z0-9]/i)[0].toLowerCase()) {
+                blankArray[index] = textArray[index];
                 index++;
                 failTest = 0;
             } else if (failTest === 2) {
-                blankArray[index] = '<span style="color: var(--darkest);">' + proofText.text[index] + '</span>';
+                blankArray[index] = '<span style="color: var(--darkest);">' + textArray[index] + '</span>';
                 index++;
                 failTest = 0;
                 failNum++;
@@ -111,12 +110,12 @@ const revMode = {
                 failTest++;
             }
 
-            qS('#practiceText').innerHTML = blankArray.join(' ');
+            qS('#practiceText').innerText = blankArray.join(' ');
             
             if (blankArray.slice(-1)[0][0] !== '_') {
                 qS('.mobile').classList.add('hidden');
                 if (failNum) {
-                    failNum >= proofText.text.length / 10 ?
+                    failNum >= textArray.length / 10 ?
                         qS('#practiceText').insertAdjacentHTML('beforeend', this.fin.fail) :
                         qS('#practiceText').insertAdjacentHTML('beforeend', this.fin.close);
                     qS('#practiceText').insertAdjacentHTML('beforeend', this.fin.tips);

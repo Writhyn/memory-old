@@ -84,14 +84,14 @@ const revMode = {
 
         qS('#practiceText').contentEditable = 'false';
         let textArray = proofText.text.split(' ');
-        let blankArray = proofText.text.replace(/[a-z0-9]/gi, '_').split(' ');
+        let blankArray = textArray.map(el => el.replace(/[a-z0-9]/gi, '_'));
 
         let index = 0;
         let failTest = 0;
         let failNum = 0;
         
         
-        qS('#practiceText').innerText = blankArray.join(' ');
+        qS('#practiceText').innerHTML = blankArray.join(' ');
 
 
         const keyTest = (result) => {
@@ -110,7 +110,7 @@ const revMode = {
                 failTest++;
             }
 
-            qS('#practiceText').innerText = blankArray.join(' ');
+            qS('#practiceText').innerHTML = blankArray.join(' ');
             
             if (blankArray.slice(-1)[0][0] !== '_') {
                 qS('.mobile').classList.add('hidden');
@@ -152,7 +152,7 @@ qS('#practiceText').addEventListener("paste", e => {
     // get text representation of clipboard
     var text = (e.originalEvent || e).clipboardData.getData('text/plain');
     // insert text manually
-    qS('#practiceText').innerHTML = text;
+    qS('#practiceText').innerText = text;
     prepTextField();
 });
 

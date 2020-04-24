@@ -154,6 +154,11 @@ h1 {
     display: none;
 }
 
+    .fixed {
+        position: fixed;
+        bottom: 30%;
+    }
+
 @media (hover: none), (max-width: 500px) {
     .mobile-show {
         display: inline;

@@ -41,6 +41,7 @@ const memMode = {
         qS('#instructions2').classList.add('hidden');
         qS('#advance').classList.remove('invisible');
         qS('.mobile').classList.add('hidden');
+        qS('.mobile').classList.remove('fixed');
 
         qS('#practiceText').contentEditable = 'true';
         qS('#practiceText').innerHTML = proofText.text;
@@ -78,17 +79,11 @@ const revMode = {
         qS('#instructions2').classList.add('hidden');
         qS('#advance').classList.add('invisible');
         qS('.mobile').classList.remove('hidden');
+        qS('#practiceText').contentEditable = 'false';
         
         proofText.update();
         memMode.lvlRefresh();
 
-        // const repBr = (el) => {
-        //     return el = el.replace(/<br>/g, '%%')
-        //         .replace(/[a-z0-9]/gi, '_')
-        //         .replace(/%%/g, '<br>');
-        // }
-
-        qS('#practiceText').contentEditable = 'false';
         let textArray = proofText.text.split(' ');
         let blankArray = textArray.map(el => el.replace(/[a-z0-9](?!([^<]+)?>)/gi, '_'));
         let index = 0;
@@ -110,7 +105,7 @@ const revMode = {
                 indexAdv();
                 failTest = 0;
             } else if (failTest === 2) {
-                blankArray[index] = '<span style="color: var(--darkest);">' + textArray[index] + '</span>';
+                blankArray[index] = '<span class="brood">' + textArray[index] + '</span>';
                 indexAdv();
                 failTest = 0;
                 failNum++;
@@ -137,6 +132,10 @@ const revMode = {
         }
         
         if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
+            if (qS('#practiceText').clientHeight > 350) {
+                console.log('this should be working');
+                qS('.mobile').classList.add('fixed');
+            }
             qS('.mobile').oninput = (event) => {
                 result = event.target.value.toLowerCase();
                 keyTest(result);

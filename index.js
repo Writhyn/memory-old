@@ -118,7 +118,7 @@ const revMode = {
 
             qS('#practiceText').innerHTML = blankArray.join(' ');
             
-            if (blankArray.slice(-1)[0][0] !== '_') {
+            if (blankArray.join(' ').indexOf('_') === -1) {
                 window.onkeyup = null;
                 qS('.mobile').classList.add('hidden');
                 if (failNum) {

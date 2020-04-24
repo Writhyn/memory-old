@@ -8,7 +8,7 @@ const errorShake = (el) => {
 const proofText = {
     text: '',
     update: function() {
-        return this.text = qS('#practiceText').innerText;
+        return this.text = qS('#practiceText').innerHTML.replace(/&nbsp;/g, '').replace(/<div>|<br>/gi,'<br> ').replace(/<\/div>/gi,'');
     }
 }
 
@@ -82,10 +82,16 @@ const revMode = {
         proofText.update();
         memMode.lvlRefresh();
 
+        // const repBr = (el) => {
+        //     return el = el.replace(/<br>/g, '%%')
+        //         .replace(/[a-z0-9]/gi, '_')
+        //         .replace(/%%/g, '<br>');
+        // }
+
         qS('#practiceText').contentEditable = 'false';
         let textArray = proofText.text.split(' ');
-        let blankArray = textArray.map(el => el.replace(/[a-z0-9]/gi, '_'));
-
+        let blankArray = textArray.map(el => el.replace(/[a-z0-9](?!([^<]+)?>)/gi, '_'));
+        console.log(textArray, blankArray);
         let index = 0;
         let failTest = 0;
         let failNum = 0;
@@ -113,6 +119,7 @@ const revMode = {
             qS('#practiceText').innerHTML = blankArray.join(' ');
             
             if (blankArray.slice(-1)[0][0] !== '_') {
+                window.onkeyup = null;
                 qS('.mobile').classList.add('hidden');
                 if (failNum) {
                     failNum >= textArray.length / 10 ?

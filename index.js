@@ -91,24 +91,27 @@ const revMode = {
         qS('#practiceText').contentEditable = 'false';
         let textArray = proofText.text.split(' ');
         let blankArray = textArray.map(el => el.replace(/[a-z0-9](?!([^<]+)?>)/gi, '_'));
-        console.log(textArray, blankArray);
         let index = 0;
         let failTest = 0;
         let failNum = 0;
         
-        
         qS('#practiceText').innerHTML = blankArray.join(' ');
 
+        const indexAdv = () => {
+            index++;
+            if (textArray[index] && textArray[index].match(/[a-z0-9](?!([^<]+)?>)/i) === null) {
+                indexAdv();
+            }
+        }
 
         const keyTest = (result) => {
-
             if (result === textArray[index].match(/[a-z0-9]/i)[0].toLowerCase()) {
                 blankArray[index] = textArray[index];
-                index++;
+                indexAdv();
                 failTest = 0;
             } else if (failTest === 2) {
                 blankArray[index] = '<span style="color: var(--darkest);">' + textArray[index] + '</span>';
-                index++;
+                indexAdv();
                 failTest = 0;
                 failNum++;
             } else {

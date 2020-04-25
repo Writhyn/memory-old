@@ -9,34 +9,34 @@ const errorShake = (el) => {
 
 const proofText = {
     text: '',
-    update: function() {
+    update() {
         return this.text = qS('#practiceText').innerHTML.replace(/&nbsp;/g, '').replace(/<div>|<br>/gi,'<br> ').replace(/<\/div>/gi,'');
     }
 }
 
 const memMode = {
     level: 0,
-    lvlUp: function() {
+    lvlUp() {
         if (this.level < 6) {
             this.level++;
             this.lvlChange();
         }
     },
-    lvlDown: function() {
+    lvlDown() {
         if (this.level > 0) {
             this.level--;
             this.lvlChange();
         }
     },
-    lvlChange: function() {
+    lvlChange() {
         qS('#level').innerHTML = 'Level ' + this.level;
         qS('#practiceText').style.webkitAnimationName = 'blink' + this.level;
     },
-    lvlRefresh: function() {
+    lvlRefresh() {
         this.level = 0;
         this.lvlChange();
     },
-    memorizeMode: function() {
+    memorizeMode() {
         qS('#memorize').classList.remove('unselected');
         qS('#review').classList.add('unselected');
         qS('#instructions').classList.add('hidden');
@@ -72,9 +72,9 @@ const revMode = {
         close: '<h3 class="done">Sooooooo close!<br> <div id="tryAgain" class="myButtons">Give it another try!</div><br>I triple-dog dare you!</h3>',
         tips: "<h4 class='doneSub'>(Click 'Instructions' for some extra tips!)</h4>",
         practice: "<h4 class='doneSub'>(Don't forget to practice reciting out loud regularly!)</h4>",
-        success: function() {return '<h3 class="done">' + revMode.congrats[Math.floor(Math.random() * revMode.congrats.length)] + '</h3>'}
+        success() {return '<h3 class="done">' + revMode.congrats[Math.floor(Math.random() * revMode.congrats.length)] + '</h3>'}
     },
-    reviewMode: function() {
+    reviewMode() {
         qS('#memorize').classList.add('unselected');
         qS('#review').classList.remove('unselected');
         qS('#instructions').classList.add('hidden');
@@ -96,9 +96,7 @@ const revMode = {
 
         const indexAdv = () => {
             index++;
-            if (textArray[index] && textArray[index].match(/[a-z0-9](?!([^<]+)?>)/i) === null) {
-                indexAdv();
-            }
+            if (textArray[index] && textArray[index].match(/[a-z0-9](?!([^<]+)?>)/i) === null) return indexAdv();
         }
 
         const keyTest = (result) => {
@@ -149,7 +147,7 @@ const revMode = {
                 keyTest(result);
             };
         }
-    },
+    }, 
 }
 
 const prepTextField = () => {
@@ -177,9 +175,7 @@ qS('#machine').addEventListener('click', event => {
         case 'levelDown': memMode.lvlDown(); break;
         case 'levelUp': memMode.lvlUp(); break;
         case 'memorize':
-            if (qS('#memorize').classList.contains('unselected')) {
-                memMode.memorizeMode();
-            }
+            if (qS('#memorize').classList.contains('unselected')) return memMode.memorizeMode();
             break;
         case 'review':
             qS('#practiceText').innerHTML && qS('#review').classList.contains('unselected') ?

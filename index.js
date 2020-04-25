@@ -72,7 +72,7 @@ const revMode = {
         close: '<h3 class="done">Sooooooo close!<br> <div id="tryAgain" class="myButtons">Give it another try!</div><br>I triple-dog dare you!</h3>',
         tips: "<h4 class='doneSub'>(Click 'Instructions' for some extra tips!)</h4>",
         practice: "<h4 class='doneSub'>(Don't forget to practice reciting out loud regularly!)</h4>",
-        success() {return '<h3 class="done">' + revMode.congrats[Math.floor(Math.random() * revMode.congrats.length)] + '</h3>'}
+        success() {return `<h3 class="done">${revMode.congrats[Math.floor(Math.random() * revMode.congrats.length)]}</h3>`}
     },
     reviewMode() {
         qS('#memorize').classList.add('unselected');
@@ -96,7 +96,9 @@ const revMode = {
 
         const indexAdv = () => {
             index++;
-            if (textArray[index] && textArray[index].match(/[a-z0-9](?!([^<]+)?>)/i) === null) return indexAdv();
+            if (textArray[index] && !textArray[index].match(/[a-z0-9](?!([^<]+)?>)/i)) {
+                indexAdv();
+            }
         }
 
         const keyTest = (result) => {
@@ -166,29 +168,35 @@ qS('#practiceText').addEventListener('input', () => {
     prepTextField();
 });
 
-qS('#machine').addEventListener('click', event => {
+qS("#machine").addEventListener("click", (event) => {
     switch (event.target.id) {
-        case 'sample':
-            prepTextField();
-            qS('#practiceText').innerText = 'This you know, my beloved brethren, but everyone must be quick to hear, slow to speak, and slow to anger; for the anger of man does not achieve the righteousness of God.';
-            break;
-        case 'levelDown': memMode.lvlDown(); break;
-        case 'levelUp': memMode.lvlUp(); break;
-        case 'memorize':
-            if (qS('#memorize').classList.contains('unselected')) return memMode.memorizeMode();
-            break;
-        case 'review':
-            qS('#practiceText').innerHTML && qS('#review').classList.contains('unselected') ?
-                revMode.reviewMode() :
-                errorShake('#shake');
-            break;
-        case 'tryAgain':
-            memMode.memorizeMode();
-            revMode.reviewMode();
-            break;
-        case 'underLink':
-            qS('#review').classList.contains('unselected') ? 
-                qS('#instructions').classList.toggle('hidden') :
-                qS('#instructions2').classList.toggle('hidden');
+      case "sample":
+        prepTextField();
+        qS("#practiceText").innerText = "This you know, my beloved brethren, but everyone must be quick to hear, slow to speak, and slow to anger; for the anger of man does not achieve the righteousness of God.";
+        break;
+      case "levelDown":
+        memMode.lvlDown();
+        break;
+      case "levelUp":
+        memMode.lvlUp();
+        break;
+      case "memorize":
+        if (qS("#memorize").classList.contains("unselected"))
+          return memMode.memorizeMode();
+        break;
+      case "review":
+        qS("#practiceText").innerHTML &&
+        qS("#review").classList.contains("unselected")
+          ? revMode.reviewMode()
+          : errorShake("#shake");
+        break;
+      case "tryAgain":
+        memMode.memorizeMode();
+        revMode.reviewMode();
+        break;
+      case "underLink":
+        qS("#review").classList.contains("unselected")
+          ? qS("#instructions").classList.toggle("hidden")
+          : qS("#instructions2").classList.toggle("hidden");
     }
-})
+  });

@@ -28,8 +28,8 @@ h1 {
 
     .shadow-entrance {
         text-shadow: 0px 0px 0px rgba(0,0,0,0);
-        -webkit-animation: shadow 1.5s ease 0.75s forwards;
-        animation: shadow 1.5s ease 0.75s forwards;
+        -webkit-animation: shadow 1.3s ease 0.75s forwards;
+        animation: shadow 1.3s ease 0.75s forwards;
     }
 
     @keyframes shadow {
@@ -55,8 +55,8 @@ h1 {
     padding: 10px 20px;
     background-color: var(--light);
     border-radius: 25px;
-    -webkit-animation-delay: 2s;
-    animation-delay: 2s;
+    -webkit-animation-delay: 1.5s;
+    animation-delay: 1.5s;
     -webkit-animation-duration: 2s;
     animation-duration: 2s;
 }
@@ -134,8 +134,8 @@ h1 {
         }
 
 #controls {
-    -webkit-animation-delay: 2s;
-    animation-delay: 2s;
+    -webkit-animation-delay: 1.5s;
+    animation-delay: 1.5s;
     -webkit-animation-duration: 1.6s;
     animation-duration: 1.6s;
     display: flex;
@@ -210,8 +210,8 @@ h1 {
 #instructLink {
     -webkit-animation-duration: 1s;
     animation-duration: 1s;
-    -webkit-animation-delay: 3s;
-    animation-delay: 3s;    
+    -webkit-animation-delay: 2.5s;
+    animation-delay: 2.5s;    
     color: var(--lightest);
     cursor: pointer;
     

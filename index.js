@@ -1,6 +1,6 @@
 const qS = document.querySelector.bind(document);
 
-console.log('Version: ', 9.9);
+console.log('Version: ', '1.0.0');
 
 const errorShake = (el) => {
     qS(el).classList.add('shake-horizontal');

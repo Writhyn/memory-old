@@ -1,5 +1,7 @@
 const qS = document.querySelector.bind(document);
 
+console.log('Version: ', 9.9);
+
 const errorShake = (el) => {
     qS(el).classList.add('shake-horizontal');
     setTimeout(() => qS(el).classList.remove('shake-horizontal'), 300);
@@ -156,11 +158,8 @@ const prepTextField = () => {
 }
 
 qS('#practiceText').addEventListener("paste", e => {
-    // cancel paste
     e.preventDefault();
-    // get text representation of clipboard
     var text = (e.originalEvent || e).clipboardData.getData('text/plain');
-    // insert text manually
     qS('#practiceText').innerText = text;
     prepTextField();
 });

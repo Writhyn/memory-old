@@ -1,13 +1,11 @@
-const qS = document.querySelector.bind(document);
-
 console.log('Version: ', '1.0.22');
+
+const qS = document.querySelector.bind(document);
 
 const errorShake = el => {
     qS(el).classList.add('shake-horizontal');
     setTimeout(() => qS(el).classList.remove('shake-horizontal'), 300);
 }
-
-const modeCheck = () => qS("#review").classList.contains("unselected");
 
 const proofText = {
     text: '',
@@ -22,6 +20,10 @@ const proofText = {
 const memMode = {
     level: 0,
     sampleText: "This you know, my beloved brethren, but everyone must be quick to hear, slow to speak, and slow to anger; for the anger of man does not achieve the righteousness of God.",
+    lvlChange() {
+        qS('#level').innerHTML = 'Level ' + this.level;
+        qS('#practiceText').style.webkitAnimationName = 'blink' + this.level;
+    },
     lvlUp() {
         this.level < 6 && this.level++;
         this.lvlChange();
@@ -29,10 +31,6 @@ const memMode = {
     lvlDown() {
         this.level > 0 && this.level--;
         this.lvlChange();
-    },
-    lvlChange() {
-        qS('#level').innerHTML = 'Level ' + this.level;
-        qS('#practiceText').style.webkitAnimationName = 'blink' + this.level;
     },
     lvlRefresh() {
         this.level = 0;
@@ -54,9 +52,7 @@ const memMode = {
 
 const revMode = {
     congrats: [
-        "Keep being awesome, and I'll keep saying congratulations.",
         "Your future is looking so bright that I need sunglasses.",
-        "Your future is no longer uncertain. You have achieved your goals.",
         "I am successful just by knowing you. I'll congratulate myself, too!",
         "Please stop giving me so many reasons to be impressed. I'm getting overwhelmed.",
         "There are only so many ways for me to say congratulations, and I'll use them all!",
@@ -116,9 +112,9 @@ const revMode = {
                 window.onkeyup = null;
                 qS('.mobile').classList.add('hidden');
                 if (failNum) {
-                    return failNum >= textArray.length / 10 ?
-                        qS('#practiceText').insertAdjacentHTML('beforeend', this.fin.fail) :
-                        qS('#practiceText').insertAdjacentHTML('beforeend', this.fin.close);
+                    return failNum >= textArray.length / 10
+                        ? qS('#practiceText').insertAdjacentHTML('beforeend', this.fin.fail)
+                        : qS('#practiceText').insertAdjacentHTML('beforeend', this.fin.close);
                 }
                 qS('#practiceText').insertAdjacentHTML('beforeend', this.fin.success());
             }
@@ -153,20 +149,21 @@ qS('#practiceText').addEventListener("paste", e => {
 });
 
 qS('#practiceText').addEventListener('input', () => {
-    prepTextField();
+    qS('#sample').classList.contains('hidden') || prepTextField();
 });
 
 qS("#machine").addEventListener("click", (event) => {
+    const modeCheck = () => qS("#review").classList.contains("unselected");
     switch (event.target.id) {
         case "levelDown":
             return memMode.lvlDown();
         case "levelUp":
             return memMode.lvlUp();
         case "memorize":
-            return qS("#memorize").classList.contains("unselected") ? memMode.memorizeMode() : false;
+            return modeCheck() || memMode.memorizeMode();
         case "review":
             return qS("#practiceText").innerHTML && modeCheck() 
-                ? revMode.reviewMode() 
+                ? revMode.reviewMode()
                 : errorShake("#shake");
         case "underLink":
             return modeCheck()

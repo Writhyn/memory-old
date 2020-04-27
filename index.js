@@ -10,23 +10,23 @@ const errorShake = (el) => {
 const proofText = {
     text: '',
     update() {
-        return this.text = qS('#practiceText').innerHTML.replace(/  +/g, ' ').replace(/&nbsp;/g, '').replace(/<div>|<br>/gi,'<br> ').replace(/<\/div>/gi,'');
+        return this.text = qS('#practiceText').innerHTML
+            .replace(/  +/g, ' ')
+            .replace(/&nbsp;/g, '')
+            .replace(/<div>|<br>/g,'<br> ')
+            .replace(/<\/div>/g,'');
     }
 }
 
 const memMode = {
     level: 0,
     lvlUp() {
-        if (this.level < 6) {
-            this.level++;
-            this.lvlChange();
-        }
+        this.level < 6 ? this.level++ : false;
+        this.lvlChange();
     },
     lvlDown() {
-        if (this.level > 0) {
-            this.level--;
-            this.lvlChange();
-        }
+        this.level > 0 ? this.level-- : false;
+        this.lvlChange();
     },
     lvlChange() {
         qS('#level').innerHTML = 'Level ' + this.level;
@@ -44,7 +44,6 @@ const memMode = {
         qS('#advance').classList.remove('invisible');
         qS('.mobile').classList.add('hidden');
         qS('.mobile').classList.remove('fixed');
-
         qS('#practiceText').contentEditable = 'true';
         qS('#practiceText').innerHTML = proofText.text;
         window.onkeyup = null;
@@ -82,16 +81,13 @@ const revMode = {
         qS('#advance').classList.add('invisible');
         qS('.mobile').classList.remove('hidden');
         qS('#practiceText').contentEditable = 'false';
-        
         proofText.update();
         memMode.lvlRefresh();
-
         let textArray = proofText.text.split(' ');
         let blankArray = textArray.map(el => el.replace(/[a-z0-9](?!([^<]+)?>)/gi, '_'));
         let index = 0;
         let failTest = 0;
         let failNum = 0;
-        
         qS('#practiceText').innerHTML = blankArray.join(' ');
 
         const indexAdv = () => {
@@ -115,9 +111,7 @@ const revMode = {
                 errorShake('#shake');
                 failTest++;
             }
-
             qS('#practiceText').innerHTML = blankArray.join(' ');
-            
             if (blankArray.join(' ').indexOf('_') === -1) {
                 window.onkeyup = null;
                 qS('.mobile').classList.add('hidden');
@@ -134,8 +128,7 @@ const revMode = {
         }
         
         if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
-            if (qS('#practiceText').clientHeight > 350) {
-                console.log('this should be working');
+            if (qS('#practiceText').clientHeight > 300) {
                 qS('.mobile').classList.add('fixed');
             }
             qS('.mobile').oninput = (event) => {
@@ -170,33 +163,30 @@ qS('#practiceText').addEventListener('input', () => {
 
 qS("#machine").addEventListener("click", (event) => {
     switch (event.target.id) {
-      case "sample":
-        prepTextField();
-        qS("#practiceText").innerText = "This you know, my beloved brethren, but everyone must be quick to hear, slow to speak, and slow to anger; for the anger of man does not achieve the righteousness of God.";
-        break;
-      case "levelDown":
-        memMode.lvlDown();
-        break;
-      case "levelUp":
-        memMode.lvlUp();
-        break;
-      case "memorize":
-        if (qS("#memorize").classList.contains("unselected"))
-          return memMode.memorizeMode();
-        break;
-      case "review":
-        qS("#practiceText").innerHTML &&
-        qS("#review").classList.contains("unselected")
-          ? revMode.reviewMode()
-          : errorShake("#shake");
-        break;
-      case "tryAgain":
-        memMode.memorizeMode();
-        revMode.reviewMode();
-        break;
-      case "underLink":
-        qS("#review").classList.contains("unselected")
-          ? qS("#instructions").classList.toggle("hidden")
-          : qS("#instructions2").classList.toggle("hidden");
+        case "sample":
+            prepTextField();
+            qS("#practiceText").innerText = "This you know, my beloved brethren, but everyone must be quick to hear, slow to speak, and slow to anger; for the anger of man does not achieve the righteousness of God.";
+            break;
+        case "levelDown":
+            memMode.lvlDown();
+            break;
+        case "levelUp":
+            memMode.lvlUp();
+            break;
+        case "memorize":
+            qS("#memorize").classList.contains("unselected") ? memMode.memorizeMode() : false;
+            break;
+        case "review":
+            qS("#practiceText").innerHTML &&
+            qS("#review").classList.contains("unselected") ? revMode.reviewMode() : errorShake("#shake");
+            break;
+        case "tryAgain":
+            memMode.memorizeMode();
+            revMode.reviewMode();
+            break;
+        case "underLink":
+            qS("#review").classList.contains("unselected")
+                ? qS("#instructions").classList.toggle("hidden")
+                : qS("#instructions2").classList.toggle("hidden");
     }
   });

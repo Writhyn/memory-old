@@ -1,31 +1,33 @@
 const qS = document.querySelector.bind(document);
 
-console.log('Version: ', '1.0.21');
+console.log('Version: ', '1.0.22');
 
-const errorShake = (el) => {
+const errorShake = el => {
     qS(el).classList.add('shake-horizontal');
     setTimeout(() => qS(el).classList.remove('shake-horizontal'), 300);
 }
+
+const modeCheck = () => qS("#review").classList.contains("unselected");
 
 const proofText = {
     text: '',
     update() {
         return this.text = qS('#practiceText').innerHTML
             .replace(/  +/g, ' ')
-            .replace(/&nbsp;/g, '')
-            .replace(/<div>|<br>/g,'<br> ')
-            .replace(/<\/div>/g,'');
+            .replace(/&nbsp;|<\/div>/g, '')
+            .replace(/<div>|<br>/g,'<br> ');
     }
 }
 
 const memMode = {
     level: 0,
+    sampleText: "This you know, my beloved brethren, but everyone must be quick to hear, slow to speak, and slow to anger; for the anger of man does not achieve the righteousness of God.",
     lvlUp() {
-        this.level < 6 ? this.level++ : false;
+        this.level < 6 && this.level++;
         this.lvlChange();
     },
     lvlDown() {
-        this.level > 0 ? this.level-- : false;
+        this.level > 0 && this.level--;
         this.lvlChange();
     },
     lvlChange() {
@@ -67,11 +69,9 @@ const revMode = {
         "I can't think of any advice I need to give you. You have proven your competence.",
     ],
     fin: {
-        fail: '<h3 class="done">Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!</h3>',
-        close: '<h3 class="done">Sooooooo close!<br> <div id="tryAgain" class="myButtons">Give it another try!</div><br>I triple-dog dare you!</h3>',
-        tips: "<h4 class='doneSub'>(Click 'Instructions' for some extra tips!)</h4>",
-        practice: "<h4 class='doneSub'>(Don't forget to practice reciting out loud regularly!)</h4>",
-        success() {return `<h3 class="done">${revMode.congrats[Math.floor(Math.random() * revMode.congrats.length)]}</h3>`}
+        fail: '<h3 class="done">Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!</h3><h4 class="doneSub">(Click "Instructions" for some extra tips!)</h4>',
+        close: '<h3 class="done">Sooooooo close!<br> <div id="tryAgain" class="myButtons">Give it another try!</div><br>I triple-dog dare you!</h3><h4 class="doneSub">(Click "Instructions" for some extra tips!)</h4>',
+        success() {return `<h3 class="done">${revMode.congrats[Math.floor(Math.random() * revMode.congrats.length)]}</h3><h4 class='doneSub'>(Don't forget to practice reciting out loud regularly!)</h4>`}
     },
     reviewMode() {
         qS('#memorize').classList.add('unselected');
@@ -116,21 +116,16 @@ const revMode = {
                 window.onkeyup = null;
                 qS('.mobile').classList.add('hidden');
                 if (failNum) {
-                    failNum >= textArray.length / 10 ?
+                    return failNum >= textArray.length / 10 ?
                         qS('#practiceText').insertAdjacentHTML('beforeend', this.fin.fail) :
                         qS('#practiceText').insertAdjacentHTML('beforeend', this.fin.close);
-                    qS('#practiceText').insertAdjacentHTML('beforeend', this.fin.tips);
-                } else {
-                    qS('#practiceText').insertAdjacentHTML('beforeend', this.fin.success());
-                    qS('#practiceText').insertAdjacentHTML('beforeend', this.fin.practice);
                 }
+                qS('#practiceText').insertAdjacentHTML('beforeend', this.fin.success());
             }
         }
         
         if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
-            if (qS('#practiceText').clientHeight > 300) {
-                qS('.mobile').classList.add('fixed');
-            }
+            qS('#practiceText').clientHeight > 300 && qS('.mobile').classList.add('fixed');
             qS('.mobile').oninput = (event) => {
                 result = event.target.value.toLowerCase();
                 keyTest(result);
@@ -163,30 +158,26 @@ qS('#practiceText').addEventListener('input', () => {
 
 qS("#machine").addEventListener("click", (event) => {
     switch (event.target.id) {
-        case "sample":
-            prepTextField();
-            qS("#practiceText").innerText = "This you know, my beloved brethren, but everyone must be quick to hear, slow to speak, and slow to anger; for the anger of man does not achieve the righteousness of God.";
-            break;
         case "levelDown":
-            memMode.lvlDown();
-            break;
+            return memMode.lvlDown();
         case "levelUp":
-            memMode.lvlUp();
-            break;
+            return memMode.lvlUp();
         case "memorize":
-            qS("#memorize").classList.contains("unselected") ? memMode.memorizeMode() : false;
-            break;
+            return qS("#memorize").classList.contains("unselected") ? memMode.memorizeMode() : false;
         case "review":
-            qS("#practiceText").innerHTML &&
-            qS("#review").classList.contains("unselected") ? revMode.reviewMode() : errorShake("#shake");
-            break;
+            return qS("#practiceText").innerHTML && modeCheck() 
+                ? revMode.reviewMode() 
+                : errorShake("#shake");
+        case "underLink":
+            return modeCheck()
+                ? qS("#instructions").classList.toggle("hidden")
+                : qS("#instructions2").classList.toggle("hidden");
         case "tryAgain":
             memMode.memorizeMode();
             revMode.reviewMode();
             break;
-        case "underLink":
-            qS("#review").classList.contains("unselected")
-                ? qS("#instructions").classList.toggle("hidden")
-                : qS("#instructions2").classList.toggle("hidden");
+        case "sample":
+            prepTextField();
+            qS("#practiceText").innerText = memMode.sampleText;
     }
   });

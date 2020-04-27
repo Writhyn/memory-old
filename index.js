@@ -1,6 +1,6 @@
 const qS = document.querySelector.bind(document);
 
-console.log('Version: ', '1.0.2');
+console.log('Version: ', '1.0.21');
 
 const errorShake = (el) => {
     qS(el).classList.add('shake-horizontal');
@@ -10,7 +10,7 @@ const errorShake = (el) => {
 const proofText = {
     text: '',
     update() {
-        return this.text = qS('#practiceText').innerHTML.replace(/&nbsp;/g, '').replace(/<div>|<br>/gi,'<br> ').replace(/<\/div>/gi,'');
+        return this.text = qS('#practiceText').innerHTML.replace(/  +/g, ' ').replace(/&nbsp;/g, '').replace(/<div>|<br>/gi,'<br> ').replace(/<\/div>/gi,'');
     }
 }
 

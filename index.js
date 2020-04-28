@@ -3,9 +3,8 @@ console.log('Version: ', '1.2.0');
 const qS = document.querySelector.bind(document);
 
 const errorShake = el => {
-    qS(el).classList.remove('shake-horizontal');
     qS(el).classList.add('shake-horizontal');
-    // setTimeout(() => qS(el).classList.remove('shake-horizontal'), 300);
+    setTimeout(() => qS(el).classList.remove('shake-horizontal'), 300);
 }
 
 const proofText = {
@@ -38,8 +37,6 @@ const memMode = {
         this.lvlChange();
     },
     memorizeMode() {
-        qS('#memorize').classList.remove('unselected');
-        qS('#review').classList.add('unselected');
         qS('#instructions').classList.add('hidden');
         qS('#instructions2').classList.add('hidden');
         qS('#advance').classList.remove('invisible');
@@ -72,8 +69,6 @@ const revMode = {
         success() {return `<h3 class="done">${revMode.congrats[Math.floor(Math.random() * revMode.congrats.length)]}</h3><h4 class='doneSub'>(Don't forget to practice reciting out loud regularly!)</h4>`}
     },
     reviewMode() {
-        qS('#memorize').classList.add('unselected');
-        qS('#review').classList.remove('unselected');
         qS('#instructions').classList.add('hidden');
         qS('#instructions2').classList.add('hidden');
         qS('#advance').classList.add('invisible');
@@ -156,22 +151,19 @@ qS('#practiceText').addEventListener('input', () => {
 });
 
 qS("#machine").addEventListener("click", (event) => {
-    const modeCheck = () => qS("#review").classList.contains("unselected");
     switch (event.target.id) {
         case "levelDown":
             return memMode.lvlDown();
         case "levelUp":
             return memMode.lvlUp();
         case "memorize":
-            return modeCheck() || memMode.memorizeMode();
+            return memMode.memorizeMode();
         case "review":
-            return qS("#practiceText").innerHTML && modeCheck() 
-                ? revMode.reviewMode()
-                : errorShake("#shake");
+            return qS("#practiceText").innerHTML ? revMode.reviewMode() : errorShake("#shake");
         case "underLink":
-            return modeCheck()
-                ? qS("#instructions").classList.toggle("hidden")
-                : qS("#instructions2").classList.toggle("hidden");
+            return qS("#float").classList.contains("float-review")
+                ? qS("#instructions2").classList.toggle("hidden")
+                : qS("#instructions").classList.toggle("hidden");
         case "tryAgain":
             memMode.memorizeMode();
             revMode.reviewMode();

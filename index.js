@@ -1,4 +1,4 @@
-console.log('Version: ', '1.0.22');
+console.log('Version: ', '1.0.3');
 
 const qS = document.querySelector.bind(document);
 

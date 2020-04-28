@@ -1,10 +1,11 @@
-console.log('Version: ', '1.0.3');
+console.log('Version: ', '1.2.0');
 
 const qS = document.querySelector.bind(document);
 
 const errorShake = el => {
+    qS(el).classList.remove('shake-horizontal');
     qS(el).classList.add('shake-horizontal');
-    setTimeout(() => qS(el).classList.remove('shake-horizontal'), 300);
+    // setTimeout(() => qS(el).classList.remove('shake-horizontal'), 300);
 }
 
 const proofText = {
@@ -44,6 +45,7 @@ const memMode = {
         qS('#advance').classList.remove('invisible');
         qS('.mobile').classList.add('hidden');
         qS('.mobile').classList.remove('fixed');
+        qS('#float').classList.remove('float-review');
         qS('#practiceText').contentEditable = 'true';
         qS('#practiceText').innerHTML = proofText.text;
         window.onkeyup = null;
@@ -76,6 +78,7 @@ const revMode = {
         qS('#instructions2').classList.add('hidden');
         qS('#advance').classList.add('invisible');
         qS('.mobile').classList.remove('hidden');
+        qS('#float').classList.add('float-review');
         qS('#practiceText').contentEditable = 'false';
         proofText.update();
         memMode.lvlRefresh();

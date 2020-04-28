@@ -133,6 +133,7 @@ h1 {
             text-align: center;
             color: var(--dark)
         }
+    
 
 #controls {
     -webkit-animation-delay: 1.5s;
@@ -171,7 +172,7 @@ h1 {
     align-items: center;
     justify-content: center;
     color: var(--lightest);
-    
+    font-family: 'Oxygen Mono', monospace;
 }
 
     .arrows {
@@ -189,7 +190,19 @@ h1 {
             border-right: 20px solid var(--light);
         }
 
+#float {
+    height: 22px;
+    pointer-events: none;
+    position: absolute;
+    transition: transform 0.15s ease;
+}
+
+    .float-review {
+        transform: translateX(128px);
+    }
+
 .myButtons {
+    width: 80px;
     margin: 10px;
     padding: 8px 12px;
     text-align: center;
@@ -200,9 +213,13 @@ h1 {
     display: inline-block;
     border-radius: 10px;
 }
+    .lowPacity {
+        opacity: 50%;
+        color: black;
+    }
 
     .unselected {
-        opacity: 50%;
+        display: inline-block;
     }
 
     .invisible {

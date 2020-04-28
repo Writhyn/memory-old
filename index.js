@@ -119,7 +119,9 @@ const revMode = {
         }
         
         if (window.matchMedia("(hover: none), (max-width: 500px)").matches) {
-            qS('#practiceText').clientHeight > 300 && qS('.mobile').classList.add('fixed');
+            qS('#practiceText').clientHeight > 300
+                ? qS('.mobile').classList.add('fixed')
+                : qS('.mobile').classList.remove('fixed');
             qS('.mobile').oninput = (event) => {
                 result = event.target.value.toLowerCase();
                 keyTest(result);

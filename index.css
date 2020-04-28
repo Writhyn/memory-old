@@ -221,10 +221,6 @@ h1 {
     border-radius: 10px;
 }
 
-    .unselected {
-        display: inline-block;
-    }
-
     .invisible {
         visibility: hidden;
     }

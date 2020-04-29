@@ -65,7 +65,7 @@ const revMode = {
     ],
     fin: {
         fail: '<h3 class="done">Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!</h3><h4 class="doneSub">(Click "Instructions" for some extra tips!)</h4>',
-        close: '<h3 class="done">Sooooooo close!<br> <div id="tryAgain" class="myButtons">Give it another try!</div><br>I triple-dog dare you!</h3><h4 class="doneSub">(Click "Instructions" for some extra tips!)</h4>',
+        close: '<h3 class="done">Sooooooo close!<br> <div id="tryAgain" class="myButtons li">Give it another try!</div><br>I triple-dog dare you!</h3><h4 class="doneSub">(Click "Instructions" for some extra tips!)</h4>',
         success() {return `<h3 class="done">${revMode.congrats[Math.floor(Math.random() * revMode.congrats.length)]}</h3><h4 class='doneSub'>(Don't forget to practice reciting out loud regularly!)</h4>`}
     },
     reviewMode() {

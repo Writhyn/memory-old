@@ -1,5 +1,3 @@
-console.log('Version: ', '1.2.0');
-
 const qS = document.querySelector.bind(document);
 
 const errorShake = el => {
@@ -175,3 +173,5 @@ qS("#machine").addEventListener("click", (event) => {
             qS("#practiceText").innerText = memMode.sampleText;
     }
   });
+
+  console.log('%cNevermore', 'font-size: smaller; font-weight: bold');

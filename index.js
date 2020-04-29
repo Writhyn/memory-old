@@ -9,9 +9,10 @@ const proofText = {
     text: '',
     update() {
         return this.text = qS('#practiceText').innerHTML
-            .replace(/  +/g, ' ')
-            .replace(/&nbsp;|<\/div>/g, '')
-            .replace(/<div>|<br>/g,'<br> ');
+            .replace(/<br>/g, '###')
+            .replace(/&nbsp;|(<([^>]+)>)/g, '')
+            .replace(/###/g,'<br> ')
+            .replace(/  +/g, ' ');
     }
 }
 

@@ -196,7 +196,7 @@ h1 {
     background-color: white;
     position: absolute;
     opacity: 25%;
-    transition: transform 0.15s ease;
+    transition: transform 0.15s ease-out;
 }
 
     .float-review {

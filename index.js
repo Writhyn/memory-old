@@ -35,12 +35,12 @@ const memMode = {
         this.lvlChange();
     },
     memorizeMode() {
+        qS('#float').classList.remove('float-review');
         qS('#instructions').classList.add('hidden');
         qS('#instructions2').classList.add('hidden');
         qS('#advance').classList.remove('invisible');
         qS('.mobile').classList.add('hidden');
         qS('.mobile').classList.remove('fixed');
-        qS('#float').classList.remove('float-review');
         qS('#practiceText').contentEditable = 'true';
         qS('#practiceText').innerHTML = proofText.text;
         window.onkeyup = null;
@@ -67,11 +67,11 @@ const revMode = {
         success() {return `<h3 class="done">${revMode.congrats[Math.floor(Math.random() * revMode.congrats.length)]}</h3><h4 class='doneSub'>(Don't forget to practice reciting out loud regularly!)</h4>`}
     },
     reviewMode() {
+        qS('#float').classList.add('float-review');
         qS('#instructions').classList.add('hidden');
         qS('#instructions2').classList.add('hidden');
         qS('#advance').classList.add('invisible');
         qS('.mobile').classList.remove('hidden');
-        qS('#float').classList.add('float-review');
         qS('#practiceText').contentEditable = 'false';
         proofText.update();
         memMode.lvlRefresh();
@@ -150,7 +150,7 @@ qS('#practiceText').addEventListener('input', () => {
     qS('#sample').classList.contains('hidden') || prepTextField();
 });
 
-qS("#machine").addEventListener("click", (event) => {
+qS("#machine").addEventListener("mousedown", (event) => {
     switch (event.target.id) {
         case "levelDown":
             return memMode.lvlDown();

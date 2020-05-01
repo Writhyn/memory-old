@@ -167,6 +167,33 @@ h1 {
     }
 }
 
+#revButton {
+    margin: -40px 0 20px 0;
+}
+
+#selectTrack {
+    display: flex;
+    align-items: center;
+    margin: 3px 10px 0 10px;
+    background-color: var(--dark);
+    width: 40px;
+    height: 15px;
+    border-radius: 7.5px;
+}
+
+#selectButton {
+    position: absolute;
+    background-color: var(--lightest);
+    height: 21px;
+    width: 21px;
+    border-radius: 50%;
+    transition: transform 0.15s ease-out;
+}
+
+.selectMove {
+    transform: translateX(19px);
+}
+
 #advance {
     display: flex;
     align-items: center;
@@ -239,9 +266,15 @@ h1 {
         
     }
 
+        .flex {
+            display: flex;
+        }
+    
         .hidden {
             display: none;
         }
+
+    
 
 
 /* ************** */

@@ -1,3 +1,4 @@
+'use strict';
 const qS = document.querySelector.bind(document);
 
 const errorShake = el => {
@@ -122,13 +123,13 @@ const revMode = {
                 ? qS('.mobile').classList.add('fixed')
                 : qS('.mobile').classList.remove('fixed');
             qS('.mobile').oninput = (event) => {
-                result = event.target.value.toLowerCase();
+                const result = event.target.value.toLowerCase();
                 keyTest(result);
                 qS('.mobile').value = '';
             };
         } else {
             window.onkeyup = (event) => {
-                result = event.key.toLowerCase();
+                const result = event.key.toLowerCase();
                 keyTest(result);
             };
         }

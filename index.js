@@ -10,7 +10,7 @@ const proofText = {
     text: '',
     update() {
         return this.text = qS('#practiceText').innerHTML
-            .replace(/<br>/g, '###')
+            .replace(/<br>|<div>/g, '###')
             .replace(/&nbsp;|(<([^>]+)>)/g, '')
             .replace(/###/g,'<br> ')
             .replace(/  +/g, ' ');

@@ -41,7 +41,7 @@ const memMode = {
         qS('#revButton').classList.add('hidden');
         qS('#instructions').classList.add('hidden');
         qS('#instructions2').classList.add('hidden');
-        qS('#advance').classList.remove('invisible');
+        qS('#advance').classList.remove('hidden');
         qS('.mobile').classList.add('hidden');
         qS('.mobile').classList.remove('fixed');
         qS('#practiceText').contentEditable = 'true';
@@ -75,7 +75,7 @@ const revMode = {
         qS('#revButton').classList.remove('hidden');
         qS('#instructions').classList.add('hidden');
         qS('#instructions2').classList.add('hidden');
-        qS('#advance').classList.add('invisible');
+        qS('#advance').classList.add('hidden');
         qS('.mobile').classList.remove('hidden');
         qS('#practiceText').contentEditable = 'false';
         proofText.update();
@@ -84,17 +84,13 @@ const revMode = {
         let textArray = proofText.text
             .replace(/<br>/g, '#')
             .split(this.easyMode ? ' ' : '')
-            .map(el => el.replace('#', '<br> '))
-        console.log(textArray);
-        
-       
+            .map(el => el.replace('#', '<br> '));
         let blankArray = textArray.map(el => el.replace(/[a-z0-9](?!([^<]+)?>)/gi, '_'));
         let index = 0;
         let failTest = 0;
         let failNum = 0;
 
         qS('#practiceText').innerHTML = blankArray.join(this.easyMode ? ' ' : '');
-
 
         const indexAdv = () => {
             index++;
@@ -108,7 +104,6 @@ const revMode = {
         const keyTest = (result) => {
 
             if (result === textArray[index].match(/[a-z0-9]/i)[0].toLowerCase()) {
-
                 blankArray[index] = textArray[index];
                 indexAdv();
                 failTest = 0;

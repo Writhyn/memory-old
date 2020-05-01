@@ -138,6 +138,9 @@ h1 {
             margin: 0;
         }
     
+#levelControls {
+    height: 60px;
+}
 
 #controls {
     -webkit-animation-delay: 1.5s;
@@ -154,7 +157,7 @@ h1 {
     border: none;
     background-color: var(--darkest);
     color: var(--lightest);
-    margin: -30px 0 0 0;
+    margin: -30px 0 5px 0;
     padding: 5px;
     text-align: center;
     display: none;
@@ -172,9 +175,8 @@ h1 {
 }
 
 #revButton {
-    margin: -35px 0 20px 0;
-    color: var(--lightest);
-    font-weight: 700;
+    color: white;
+    padding: 22px;
 }
 
 #selectTrack {
@@ -201,7 +203,6 @@ h1 {
 }
 
 #advance {
-    display: flex;
     align-items: center;
     justify-content: center;
     color: var(--lightest);

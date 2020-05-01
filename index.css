@@ -52,7 +52,7 @@ h1 {
 
 #practice {
     width: 85vw;
-    padding: 10px 20px;
+    padding: 15px 20px;
     background-color: var(--light);
     border-radius: 25px;
     -webkit-animation-delay: 1.5s;
@@ -133,6 +133,10 @@ h1 {
             text-align: center;
             color: var(--dark)
         }
+
+        #sample {
+            margin: 0;
+        }
     
 
 #controls {
@@ -150,7 +154,7 @@ h1 {
     border: none;
     background-color: var(--darkest);
     color: var(--lightest);
-    margin: 20px 0 -46px 0;
+    margin: -30px 0 0 0;
     padding: 5px;
     text-align: center;
     display: none;
@@ -168,7 +172,9 @@ h1 {
 }
 
 #revButton {
-    margin: -40px 0 20px 0;
+    margin: -35px 0 20px 0;
+    color: var(--lightest);
+    font-weight: 700;
 }
 
 #selectTrack {

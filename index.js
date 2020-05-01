@@ -10,9 +10,9 @@ const proofText = {
     text: '',
     update() {
         return this.text = qS('#practiceText').innerHTML
-            .replace(/<br>|<div>/g, '###')
+            .replace(/<br>|<div>/g, '#')
             .replace(/&nbsp;|(<([^>]+)>)/g, '')
-            .replace('###', '<br> ')
+            .replace(/#/g, '<br> ')
             .replace(/  +/g, ' ');
     }
 }
@@ -82,9 +82,11 @@ const revMode = {
         memMode.lvlRefresh();
         
         let textArray = proofText.text
-            .replace('<br>', '#')
+            .replace(/<br>/g, '#')
             .split(this.easyMode ? ' ' : '')
-            .map(el => el.replace('#', '<br>'))
+            .map(el => el.replace('#', '<br> '))
+        console.log(textArray);
+        
        
         let blankArray = textArray.map(el => el.replace(/[a-z0-9](?!([^<]+)?>)/gi, '_'));
         let index = 0;

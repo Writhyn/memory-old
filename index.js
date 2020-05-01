@@ -6,6 +6,9 @@ const errorShake = el => {
     setTimeout(() => qS(el).classList.remove('shake-horizontal'), 300);
 }
 
+const hide = (...els) => els.map(el => qS(el).classList.add('hidden'));
+const unHide = (...els) => els.map(el => qS(el).classList.remove('hidden'));
+
 const proofText = {
     text: '',
     update() {
@@ -37,12 +40,9 @@ const memMode = {
         this.lvlChange();
     },
     memorizeMode() {
+        hide('#revButton', '#instructions', '#instructions2', '.mobile');
+        unHide('#advance');
         qS('#float').classList.remove('float-review');
-        qS('#revButton').classList.add('hidden');
-        qS('#instructions').classList.add('hidden');
-        qS('#instructions2').classList.add('hidden');
-        qS('#advance').classList.remove('hidden');
-        qS('.mobile').classList.add('hidden');
         qS('.mobile').classList.remove('fixed');
         qS('#practiceText').contentEditable = 'true';
         qS('#practiceText').innerHTML = proofText.text;
@@ -66,17 +66,14 @@ const revMode = {
     ],
     fin: {
         fail: '<h3 class="done">Hmm. Maybe use "Memorize Mode" for a bit and come back for another try! You got this!</h3><h4 class="doneSub">(Click "Instructions" for some extra tips!)</h4>',
-        close: '<h3 class="done">Sooooooo close!<br> <div id="tryAgain" class="myButtons li">Give it another try!</div><br>I triple-dog dare you!</h3><h4 class="doneSub">(Click "Instructions" for some extra tips!)</h4>',
+        close: '<h3 class="done">Sooooooo close!<br> <div id="tryAgain" class="myButtons">Give it another try!</div><br>I triple-dog dare you!</h3><h4 class="doneSub">(Click "Instructions" for some extra tips!)</h4>',
         success() {return `<h3 class="done">${revMode.congrats[Math.floor(Math.random() * revMode.congrats.length)]}</h3><h4 class='doneSub'>(Don't forget to practice reciting out loud regularly!)</h4>`}
     },
     easyMode: true,
     reviewMode() {
+        hide('#instructions', '#instructions2', '#advance');
+        unHide('#revButton', '.mobile')
         qS('#float').classList.add('float-review');
-        qS('#revButton').classList.remove('hidden');
-        qS('#instructions').classList.add('hidden');
-        qS('#instructions2').classList.add('hidden');
-        qS('#advance').classList.add('hidden');
-        qS('.mobile').classList.remove('hidden');
         qS('#practiceText').contentEditable = 'false';
         proofText.update();
         memMode.lvlRefresh();
@@ -123,7 +120,7 @@ const revMode = {
 
             if (blankArray.join(' ').indexOf('_') === -1) {
                 window.onkeyup = null;
-                qS('.mobile').classList.add('hidden');
+                hide('.mobile');
                 if (failNum) {
                     return failNum >= textArray.length / 10
                         ? qS('#practiceText').insertAdjacentHTML('beforeend', this.fin.fail)
@@ -152,7 +149,7 @@ const revMode = {
 }
 
 const prepTextField = () => {
-    qS('#sample').classList.add('hidden');
+    hide('#sample');
     qS('#shake').style.flexFlow = 'column nowrap';
 }
 
@@ -185,11 +182,10 @@ qS("#machine").addEventListener("mousedown", (event) => {
             memMode.memorizeMode();
             revMode.reviewMode();
             break;
-        case "selectButton":
+        case "toggle":
             revMode.easyMode = !revMode.easyMode;
             memMode.memorizeMode();
             revMode.reviewMode();
-            qS('#selectButton').classList.toggle('selectMove');
             break;
         case "sample":
             prepTextField();

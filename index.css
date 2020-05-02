@@ -248,7 +248,7 @@ input:checked + label:after {
 }
 
     .float-review {
-        transform: translateX(128px);
+        transform: translateX(129px);
     }
 
 .myButtons {

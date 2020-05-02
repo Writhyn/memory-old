@@ -178,12 +178,10 @@ qS("#machine").addEventListener("mousedown", (event) => {
             return qS("#float").classList.contains("float-review")
                 ? qS("#instructions2").classList.toggle("hidden")
                 : qS("#instructions").classList.toggle("hidden");
-        case "tryAgain":
-            memMode.memorizeMode();
-            revMode.reviewMode();
-            break;
         case "toggle":
             revMode.easyMode = !revMode.easyMode;
+            // falls through
+        case "tryAgain":
             memMode.memorizeMode();
             revMode.reviewMode();
             break;

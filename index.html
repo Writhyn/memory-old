@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
+    <!-- <div id="verse" class="hidden">
+        <script src="https://www.biblegateway.com/votd/votd.write.callback.js"></script>
+        <script src="https://www.biblegateway.com/votd/get/?format=json&version=NASB&callback=BG.votdWriteCallback"></script>
+    </div> -->
+    
 
     <div id="machine">
         <h1 id='title' class="shadow-entrance">Memory Machine</h1>
@@ -18,7 +23,7 @@
         <div id="practice" class="flicker-in-1">
             <div id="shake">
                 <h2 id="practiceText" contenteditable="true" placeholder='Paste/type text here'></h2>
-                <div id="sample" class="myButtons li">Sample</div>
+                <div id="sample" class="myButtons">Sample</div>
             </div>
         </div>
 
@@ -26,17 +31,26 @@
             
             <input type="text" placeholder="Tap Here to Enter Text" class="mobile mobile-show hidden">
             
-            <div id='advance'>
-                <div id="levelDown" class="arrows"></div>
-                <h3 id="level">Level 0</h3>
-                <div id='levelUp' class="arrows"></div>
+            <div id="levelControls">
+                <div id='advance' class="flex">
+                    <div id="levelDown" class="arrows"></div>
+                    <h3 id="level">Level 0</h3>
+                    <div id='levelUp' class="arrows"></div>
+                </div>
+
+                <div id="revButton" class="flex hidden">
+                    <span>Word Mode</span>
+                    <input type="checkbox" id="switch" /><label id="toggle" for="switch"></label>
+                    <span>Letter Mode</span>
+                </div>
             </div>
+
+            
 
             <div id="modeButtons">
                 <div id="float" class="myButtons lowPacity"></div>
                 <div id="memorize" class="myButtons">Memorize</div>
                 <div id="review" class="myButtons unselected">Review</div>
-                
             </div>  
             
         </div>

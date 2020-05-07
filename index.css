@@ -228,6 +228,7 @@ input:checked + label:after {
         border-bottom: 20px solid transparent;
         margin: 0px 10px;
         border-radius: 20px;
+        cursor: pointer;
     }
 
         #levelUp {
@@ -238,12 +239,14 @@ input:checked + label:after {
             border-right: 20px solid var(--light);
         }
 
+
 #float {
     height: 22px;
     z-index: 1;
     background-color: white;
     position: absolute;
     opacity: 30%;
+    cursor: default;
     transition: transform 0.15s ease-out;
 }
 
@@ -262,7 +265,12 @@ input:checked + label:after {
     cursor: pointer;
     display: inline-block;
     border-radius: 10px;
+    transition: 0.3s background-color ease;
 }
+
+    .myButtons:hover {
+        background-color: var(--lightest);
+    }
 
 #instructLink {
     -webkit-animation-duration: 1s;

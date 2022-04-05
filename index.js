@@ -157,6 +157,7 @@ qS('#practiceText').addEventListener("paste", e => {
     e.preventDefault();
     var text = (e.originalEvent || e).clipboardData.getData('text/plain');
     qS('#practiceText').innerText = text;
+    window.localStorage.setItem('storedText', text);
     prepTextField();
 });
 
@@ -190,5 +191,9 @@ qS("#machine").addEventListener("mousedown", (event) => {
             qS("#practiceText").innerText = memMode.sampleText;
     }
   });
+
+if(window.localStorage.getItem('storedText')) {
+    qS("#practiceText").innerText = window.localStorage.getItem('storedText');
+}
 
   console.log('%cNevermore', 'font-size: smaller; font-weight: bold');

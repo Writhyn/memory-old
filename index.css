@@ -61,6 +61,10 @@ h1 {
     animation-duration: 2s;
 }
 
+    [contenteditable] {
+        outline: 0px solid transparent;
+    }
+
     .brood {
         background-color: var(--medium);
         color: black;

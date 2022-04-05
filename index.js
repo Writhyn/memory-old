@@ -153,11 +153,17 @@ const prepTextField = () => {
     qS('#shake').style.flexFlow = 'column nowrap';
 }
 
+const saveToStorage = () => {
+    let text = qS('#practiceText').innerText;
+    if(text) {
+       window.localStorage.setItem('storedText', text); 
+    }
+}
+
 qS('#practiceText').addEventListener("paste", e => {
     e.preventDefault();
     var text = (e.originalEvent || e).clipboardData.getData('text/plain');
     qS('#practiceText').innerText = text;
-    window.localStorage.setItem('storedText', text);
     prepTextField();
 });
 
@@ -167,6 +173,8 @@ qS('#practiceText').addEventListener('input', () => {
 
 qS("#machine").addEventListener("mousedown", (event) => {
     switch (event.target.id) {
+        case "saveButton":
+            return saveToStorage();
         case "levelDown":
             return memMode.lvlDown();
         case "levelUp":
@@ -194,6 +202,7 @@ qS("#machine").addEventListener("mousedown", (event) => {
 
 if(window.localStorage.getItem('storedText')) {
     qS("#practiceText").innerText = window.localStorage.getItem('storedText');
+    qS("#sample").classList.toggle('hidden');
 }
 
   console.log('%cNevermore', 'font-size: smaller; font-weight: bold');

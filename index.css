@@ -276,6 +276,13 @@ input:checked + label:after {
         background-color: var(--lightest);
     }
 
+#saveButton {
+    min-width: 40px;
+    border-radius: 50px;
+    color: var(--lightest);
+    background-color: var(--dark);
+}
+
 #instructLink {
     -webkit-animation-duration: 1s;
     animation-duration: 1s;
